@@ -9,7 +9,7 @@ Screenwalk could not connect to the supplied `--url`.
 Check that the target dev server is still running, copy its exact printed URL, and run Doctor before retrying:
 
 ```bash
-pnpm screenwalk doctor /absolute/path/to/app \
+npx screenwalk doctor /absolute/path/to/app \
   --url http://127.0.0.1:3000
 ```
 
@@ -34,7 +34,7 @@ A viewport/access-view capture did not finish. The suffix identifies the failing
 Read the browser message immediately above the code, confirm the target URL still loads, and retry with timing evidence:
 
 ```bash
-pnpm screenwalk /absolute/path/to/app \
+npx screenwalk /absolute/path/to/app \
   --url http://127.0.0.1:3000 \
   --timing-json /tmp/screenwalk-timings.json
 ```

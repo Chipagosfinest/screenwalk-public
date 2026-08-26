@@ -29,7 +29,7 @@ Every framework uses the same boundary:
 pnpm dev
 
 # Terminal 2 · the Screenwalk checkout
-pnpm screenwalk /absolute/path/to/project \
+npx screenwalk /absolute/path/to/project \
   --url http://127.0.0.1:PORT
 ```
 
@@ -42,7 +42,7 @@ Keep both processes running. Screenwalk connects to the app you started; it neve
 pnpm dev
 
 # Screenwalk checkout
-pnpm screenwalk /absolute/path/to/next-app \
+npx screenwalk /absolute/path/to/next-app \
   --url http://127.0.0.1:3000
 ```
 
@@ -59,7 +59,7 @@ This applies to React, Vue, Preact, Solid, and other Vite-powered browser apps.
 pnpm dev
 
 # Screenwalk checkout
-pnpm screenwalk /absolute/path/to/vite-app \
+npx screenwalk /absolute/path/to/vite-app \
   --url http://127.0.0.1:5173
 ```
 
@@ -72,7 +72,7 @@ Screenwalk follows rendered anchors and observes History API destinations. Route
 pnpm dev
 
 # Screenwalk checkout
-pnpm screenwalk /absolute/path/to/sveltekit-app \
+npx screenwalk /absolute/path/to/sveltekit-app \
   --url http://127.0.0.1:5173
 ```
 
@@ -85,7 +85,7 @@ SvelteKit file routes are not statically inventoried yet. Captured routes and tr
 pnpm dev
 
 # Screenwalk checkout
-pnpm screenwalk /absolute/path/to/astro-site \
+npx screenwalk /absolute/path/to/astro-site \
   --url http://127.0.0.1:4321
 ```
 
@@ -98,7 +98,7 @@ Server-rendered pages and hydrated islands are both visible to the browser. Clie
 pnpm dev
 
 # Screenwalk checkout — use the exact URL Nuxt printed
-pnpm screenwalk /absolute/path/to/nuxt-app \
+npx screenwalk /absolute/path/to/nuxt-app \
   --url http://127.0.0.1:3000
 ```
 
@@ -111,7 +111,7 @@ pnpm screenwalk /absolute/path/to/nuxt-app \
 pnpm dev
 
 # Screenwalk checkout — use the exact URL from the target server
-pnpm screenwalk /absolute/path/to/react-router-app \
+npx screenwalk /absolute/path/to/react-router-app \
   --url http://127.0.0.1:5173
 ```
 
@@ -126,7 +126,7 @@ Any local static server works. For a directory of HTML files:
 python3 -m http.server 8080
 
 # Screenwalk checkout
-pnpm screenwalk /absolute/path/to/html-site \
+npx screenwalk /absolute/path/to/html-site \
   --url http://127.0.0.1:8080
 ```
 
@@ -137,7 +137,7 @@ Screenwalk follows visible same-origin links across HTML documents. It does not 
 Pass the path to the frontend application, not automatically the monorepo root, unless the route files live at the root:
 
 ```bash
-pnpm screenwalk /absolute/path/to/monorepo/apps/web \
+npx screenwalk /absolute/path/to/monorepo/apps/web \
   --url http://127.0.0.1:3000
 ```
 

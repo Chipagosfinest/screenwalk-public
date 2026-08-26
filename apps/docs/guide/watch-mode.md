@@ -3,7 +3,7 @@
 Use watch mode when Screenwalk is part of the local edit-and-review loop.
 
 ```bash
-pnpm screenwalk /absolute/path/to/app \
+npx screenwalk /absolute/path/to/app \
   --url http://127.0.0.1:3000 \
   --watch
 ```

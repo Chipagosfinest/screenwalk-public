@@ -1,6 +1,6 @@
 # Public beta
 
-Screenwalk is public source beta software, not a public npm package yet.
+Screenwalk is public source beta software available through npm.
 
 ## What is ready to test
 

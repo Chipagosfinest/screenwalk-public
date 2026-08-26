@@ -1,6 +1,8 @@
 # Screenwalk
 
 [![CI](https://github.com/Chipagosfinest/screenwalk-public/actions/workflows/ci.yml/badge.svg)](https://github.com/Chipagosfinest/screenwalk-public/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/screenwalk)](https://www.npmjs.com/package/screenwalk)
+[![npm downloads](https://img.shields.io/npm/dw/screenwalk)](https://www.npmjs.com/package/screenwalk)
 [![TypeScript](https://img.shields.io/badge/TypeScript-first-3178c6)](https://www.typescriptlang.org/)
 
 **See the product you actually built. Review it as a whole. Change it with precision.**
@@ -29,31 +31,25 @@ It can also help you find “zombie UI”: old screens, hidden branches, and for
 
 ## Get started
 
-Screenwalk is public source beta software, but it is not yet published to npm. The npm package is release-gated by a clean tarball installation test. Until that release passes, clone the repository and keep the target app running:
+Keep the target app running, then execute Screenwalk from npm:
 
 ```bash
-git clone https://github.com/Chipagosfinest/screenwalk-public.git
-cd screenwalk-public
-pnpm install
-pnpm screenwalk /absolute/path/to/app --url http://127.0.0.1:3000
+npx screenwalk /absolute/path/to/app --url http://127.0.0.1:3000
 ```
 
-The verified environment is Node.js 22 and pnpm 11.18.0 with Chromium or Chrome available. Screenwalk does not upload the target app, replace its dev server, submit arbitrary forms, or click consequential actions.
+The verified environment is Node.js 22.14 or newer with Chromium or Chrome available. Screenwalk does not upload the target app, replace its dev server, submit arbitrary forms, or click consequential actions. pnpm users can run the same package with `pnpm dlx screenwalk`.
 
 If capture cannot start:
 
 ```bash
-pnpm screenwalk doctor /absolute/path/to/app --url http://127.0.0.1:3000
+npx screenwalk doctor /absolute/path/to/app --url http://127.0.0.1:3000
 ```
 
 For a known-good first run:
 
 ```bash
-# Terminal 1
-pnpm --dir fixtures/html-app dev
-
-# Terminal 2
-pnpm screenwalk fixtures/html-app --url http://127.0.0.1:3111
+# Run against any already-running local app
+npx screenwalk /absolute/path/to/app --url http://127.0.0.1:3000
 ```
 
 ## Review one real change
@@ -81,8 +77,8 @@ Feature flags and A/B variants require explicit recipes so Screenwalk can record
 For a monorepo or deployed environment:
 
 ```bash
-pnpm screenwalk inspect /absolute/path/to/repository --out /tmp/screenwalk-topology.json
-pnpm screenwalk /absolute/path/to/repository \
+npx screenwalk inspect /absolute/path/to/repository --out /tmp/screenwalk-topology.json
+npx screenwalk /absolute/path/to/repository \
   --url https://staging.example.com \
   --service apps-web \
   --environment staging
@@ -113,4 +109,4 @@ pnpm verify:clean
 pnpm verify:package
 ```
 
-The package is configured for npm but remains unpublished until `pnpm verify:package` passes from a clean install. The source repository is available under the [MIT License](LICENSE).
+Every release is gated by `pnpm verify:package`, which installs the packed artifact outside the monorepo and runs a real browser capture plus packaged Studio check. The source repository is available under the [MIT License](LICENSE).

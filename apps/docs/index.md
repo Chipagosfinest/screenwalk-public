@@ -47,8 +47,7 @@ Screenwalk turns repository evidence and a running local app into one reviewable
 Keep your app running, then point Screenwalk at its repository and local URL:
 
 ```bash
-pnpm install
-pnpm screenwalk /absolute/path/to/app --url http://127.0.0.1:3000
+npx screenwalk /absolute/path/to/app --url http://127.0.0.1:3000
 ```
 
 Screenwalk scans, captures, starts its local Studio, and opens the map in your browser. It does not upload your application or replace its dev server.
@@ -56,5 +55,5 @@ Screenwalk scans, captures, starts its local Studio, and opens the map in your b
 [Run the five-minute quickstart →](/guide/quickstart)
 
 ::: info Public beta
-Screenwalk currently installs from its public source repository, not npm. The command above runs from a cloned Screenwalk checkout. See [beta expectations](/beta) before sharing sensitive captures.
+Screenwalk is available from npm as a public beta. The command runs locally and writes its evidence into the current project's `.screenwalk/` directory. See [beta expectations](/beta) before sharing sensitive captures.
 :::
