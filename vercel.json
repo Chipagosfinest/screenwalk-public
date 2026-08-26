@@ -12,7 +12,7 @@
           "value": "screenwalk.dev"
         }
       ],
-      "destination": "/__docs/"
+      "destination": "/__docs/index"
     },
     {
       "source": "/:path*",
