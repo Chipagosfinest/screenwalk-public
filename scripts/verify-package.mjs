@@ -92,7 +92,7 @@ async function runStudioCapture(command, args, cwd) {
     });
     const studioResponse = await fetch(studioUrl);
     assert.equal(studioResponse.status, 200);
-    assert.match(await studioResponse.text(), /<title>Screenwalk Studio<\/title>/);
+    assert.match(await studioResponse.text(), /<title>Screenwalk — See the product you actually built<\/title>/);
     const graphResponse = await fetch(new URL("/screenbranch.graph.json", studioUrl));
     assert.equal(graphResponse.status, 200);
   } finally {

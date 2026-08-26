@@ -21,6 +21,7 @@ const initialParams = new URLSearchParams(window.location.search);
 const graphKey = initialParams.get("graph");
 const knownGraphKeys = new Set([null, "local", "fixture"]);
 const unknownGraphKey = !knownGraphKeys.has(graphKey) ? graphKey : null;
+const isHostedDemo = graphKey !== "local" && (initialParams.get("demo") === "1" || !new Set(["localhost", "127.0.0.1", "::1"]).has(window.location.hostname));
 const bundledGraph = polishCapturedGraph(flowGraphSchema.parse(demoGraphData) as FlowGraph);
 const nodeTypes = { screen: FlowNode };
 const proOptions = { hideAttribution: true };
@@ -136,6 +137,7 @@ function Studio({ graph: sourceGraph }: { graph: FlowGraph }) {
   const [copiedFindings, setCopiedFindings] = useState<"errors" | "prompt" | "">("");
   const [copiedSelection, setCopiedSelection] = useState<"routes" | "prompt" | "">("");
   const [copiedJourney, setCopiedJourney] = useState(false);
+  const [copiedInstall, setCopiedInstall] = useState(false);
   const [copiedReviewNodeId, setCopiedReviewNodeId] = useState("");
   const [copyingReviewNodeId, setCopyingReviewNodeId] = useState("");
   const [copyError, setCopyError] = useState("");
@@ -153,7 +155,8 @@ function Studio({ graph: sourceGraph }: { graph: FlowGraph }) {
   const [inspectorNodeId, setInspectorNodeId] = useState<string | null>(null);
   const [showPlayer, setShowPlayer] = useState(false);
   const [spacePanning, setSpacePanning] = useState(false);
-  const [rearrangeMode, setRearrangeMode] = useState(false);
+  const [rearrangeMode, setRearrangeMode] = useState(isHostedDemo);
+  const [showDemoGuide, setShowDemoGuide] = useState(isHostedDemo);
   const [activeStep, setActiveStep] = useState(0);
   const playerRef = useRef<PlayerRef>(null);
   const playerCloseRef = useRef<HTMLButtonElement>(null);
@@ -410,6 +413,22 @@ function Studio({ graph: sourceGraph }: { graph: FlowGraph }) {
     if (copyWithSelection(payload)) markCopied();
     else void navigator.clipboard?.writeText(payload).then(markCopied).catch(() => setCopyError("Clipboard access was blocked. Select the path steps and copy them manually."));
   };
+  const copyInstall = () => {
+    const markCopied = () => {
+      setCopyError("");
+      setCopiedInstall(true);
+      window.setTimeout(() => setCopiedInstall(false), 1800);
+    };
+    setCopyError("");
+    const command = "npx screenwalk /absolute/path/to/app --url http://127.0.0.1:3000";
+    if (navigator.clipboard?.writeText) {
+      void navigator.clipboard.writeText(command).then(markCopied).catch(() => {
+        copyText(command, markCopied, () => setCopyError("Clipboard access was blocked. Copy the install command from the documentation."));
+      });
+      return;
+    }
+    copyText(command, markCopied, () => setCopyError("Clipboard access was blocked. Copy the install command from the documentation."));
+  };
   const handleFlowInit = useCallback((instance: ReactFlowInstance<Node<FlowNodeData>, Edge>) => {
     flowInstanceRef.current = instance;
     window.requestAnimationFrame(() => fitSelectedPath(instance, 0));
@@ -593,11 +612,11 @@ function Studio({ graph: sourceGraph }: { graph: FlowGraph }) {
   }, [journey, showPlayer]);
 
   return (
-    <main className={`studio-shell ${reviewAudit ? "is-audit" : ""}`}>
+    <main className={`studio-shell ${reviewAudit ? "is-audit" : ""} ${isHostedDemo ? "is-public-demo" : ""}`}>
       <header className="topbar">
         <div className="brand">
           <span className="brand-mark">S</span>
-          <div><strong>Screenwalk</strong><small>{graph.project.name} · {scanContext}</small></div>
+          <div><strong>Screenwalk</strong><small>{isHostedDemo ? "Interactive product map" : `${graph.project.name} · ${scanContext}`}</small></div>
         </div>
         <div className="topbar-actions core-topbar-actions">
           <button
@@ -608,27 +627,54 @@ function Studio({ graph: sourceGraph }: { graph: FlowGraph }) {
           >
             {reviewAudit ? "← Back to map" : `${auditTotal} things to check`}
           </button>
-          <label className="source-switch core-source-switch">
-            <span>Project</span>
-            <select
-              aria-label="Choose a project"
-              value={graphKey ?? "fixture"}
-              onChange={(event) => {
-                const value = event.target.value;
-                window.location.href = value === "fixture" ? "/" : `/?graph=${value}`;
-              }}
-            >
-              <option value="local">This project · latest scan</option>
-              <optgroup label="Example projects">
-                <option value="fixture">Screenwalk fixture</option>
-              </optgroup>
-            </select>
-          </label>
+          {isHostedDemo ? (
+            <nav className="public-demo-nav" aria-label="Screenwalk links">
+              <a href="https://screenwalk.dev">Docs</a>
+              <a href="https://github.com/Chipagosfinest/screenwalk-public">GitHub</a>
+              <button type="button" onClick={copyInstall}>{copiedInstall ? "Command copied" : "Use Screenwalk"}</button>
+            </nav>
+          ) : (
+            <label className="source-switch core-source-switch">
+              <span>Project</span>
+              <select
+                aria-label="Choose a project"
+                value={graphKey ?? "fixture"}
+                onChange={(event) => {
+                  const value = event.target.value;
+                  window.location.href = value === "fixture" ? "/" : `/?graph=${value}`;
+                }}
+              >
+                <option value="local">This project · latest scan</option>
+                <optgroup label="Example projects">
+                  <option value="fixture">Screenwalk fixture</option>
+                </optgroup>
+              </select>
+            </label>
+          )}
           {personaOptions.length > 1 && <div className="viewport-toggle access-toggle" aria-label="Who is viewing the product">
             {personaOptions.map((option) => <button aria-pressed={activePersona === option.id} className={activePersona === option.id ? "active" : ""} key={option.id} type="button" onClick={() => switchAccessView(option.id)}>{option.label}</button>)}
           </div>}
         </div>
       </header>
+
+      {showDemoGuide && (
+        <section className="public-demo-guide" aria-label="Interactive demo introduction">
+          <button className="public-demo-guide-close" type="button" onClick={() => setShowDemoGuide(false)} aria-label="Close introduction">×</button>
+          <p className="eyebrow">The product is the demo</p>
+          <h1>See the UI you actually built.</h1>
+          <p>Drag these screens around. Follow a path. Click any screen to attach a precise change and copy an agent-ready brief.</p>
+          <ol>
+            <li><span>01</span><strong>Move a screen</strong></li>
+            <li><span>02</span><strong>Open its context</strong></li>
+            <li><span>03</span><strong>Write the next change</strong></li>
+          </ol>
+          <div>
+            <button type="button" onClick={() => setShowDemoGuide(false)}>Explore the live map →</button>
+            <a href="https://screenwalk.dev/guide/quickstart">Five-minute setup</a>
+          </div>
+          <small>Sample data only. Screenwalk runs locally and does not upload your app.</small>
+        </section>
+      )}
 
       <div className="workspace">
         <aside className="rail">
@@ -804,7 +850,7 @@ function Studio({ graph: sourceGraph }: { graph: FlowGraph }) {
             )}
             {evidenceView !== "screens" && (
               <p className="canvas-status" role="status">
-                <span>Local · this Mac only</span>
+                <span>{isHostedDemo ? "Demo · sample data" : "Local · this Mac only"}</span>
                 <strong>
                   {spacePanning
                     ? "Panning the map"
@@ -818,7 +864,7 @@ function Studio({ graph: sourceGraph }: { graph: FlowGraph }) {
                           ? `${selectedNode.title} selected · open the screen or copy it for your agent`
                           : "Choose a screen to see more · scroll to move around"}
                 </strong>
-                <small>{rearrangeMode ? "Moving a card does not change the product" : "Only you can see these changes"}</small>
+                <small>{isHostedDemo ? "Your notes stay in this browser" : rearrangeMode ? "Moving a card does not change the product" : "Only you can see these changes"}</small>
               </p>
             )}
             </div>
