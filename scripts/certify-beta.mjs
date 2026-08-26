@@ -68,7 +68,15 @@ try {
   assert.deepEqual(htmlRepeat.graph.diff?.addedNodeIds, []);
   assert.deepEqual(htmlRepeat.graph.diff?.removedNodeIds, []);
   assert.deepEqual(htmlRepeat.graph.diff?.changedNodeIds, []);
-  results.push(fact("plain-html", htmlRepeat.graph, { repeatStable: true, unsafeRouteWithheld: true, unchangedDestinationWithheld: true, terminalVerdictPassed: true, variantAPassed: true, variantBPassed: true, brokenVariantsFailedIndependently: true, repeatedReceiptsAppended: true }));
+  const overlays = await record("html-overlay-states", htmlRepeat.graphPath, htmlPort, resolve(root, "examples/html-overlay-states.recipe.json"), true, 2);
+  const overlayNodes = overlays.graph.nodes.filter((node) => node.identity?.presentation.kind === "modal" || node.identity?.presentation.kind === "drawer");
+  assert.deepEqual(overlayNodes.map((node) => node.identity.presentation.kind).sort(), ["drawer", "modal"]);
+  assert.ok(overlayNodes.every((node) => node.capture?.quality === "ready"), "overlay states must have ready screenshots");
+  assert.ok(overlayNodes.every((node) => node.route === "/"), "overlay states must preserve the source route");
+  assert.ok(overlays.receipts.every((receipt) => receipt.status === "passed" && receipt.asserted), "overlay journeys must pass their visible dialog assertions");
+  assert.ok(overlays.graph.edges.filter((edge) => overlayNodes.some((node) => node.id === edge.target)).every((edge) => edge.observations?.[0]?.fromUrl === edge.observations?.[0]?.toUrl), "same-route overlay transitions must preserve URL evidence");
+  assert.deepEqual(overlays.graph.nodes.find((node) => node.id === "screen:root")?.interactiveTargets.filter((target) => target.status === "observed" && target.role === "button").map((target) => target.name).sort(), ["Invite people", "Review activity"], "explicit overlay triggers must remain observed across multiple journeys");
+  results.push(fact("plain-html", overlays.graph, { repeatStable: true, unsafeRouteWithheld: true, unchangedDestinationWithheld: true, terminalVerdictPassed: true, variantAPassed: true, variantBPassed: true, brokenVariantsFailedIndependently: true, repeatedReceiptsAppended: true, modalStateRecorded: true, drawerStateRecorded: true }));
 
   const spa = await capture("vite-spa", "fixtures/vite-spa", spaPort, ["--discover-depth", "3"]);
   assert.deepEqual(readyRoutes(spa.graph), ["/", "/projects", "/projects/new", "/settings"]);

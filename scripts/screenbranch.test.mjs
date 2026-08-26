@@ -66,7 +66,7 @@ test("a URL positional uses the current directory as the project", () => {
 test("validate returns machine-readable graph facts", () => {
   const result = spawnSync(process.execPath, [cli, "validate", resolve(root, "apps/studio/src/data/demo-graph.json")], { cwd: root, encoding: "utf8" });
   assert.equal(result.status, 0, result.stderr);
-  assert.deepEqual(JSON.parse(result.stdout), { ok: true, schemaVersion: "screenbranch.graph.v0", nodes: 4, edges: 2, journeys: 2, gaps: 0 });
+  assert.deepEqual(JSON.parse(result.stdout), { ok: true, schemaVersion: "screenbranch.graph.v0", nodes: 6, edges: 4, journeys: 4, gaps: 0 });
 });
 
 test("doctor JSON reports an unreachable target with a failing exit code", () => {

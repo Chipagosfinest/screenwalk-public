@@ -301,19 +301,33 @@ async function recordJourneys(context: BrowserContext, input: FlowGraph, recipe:
 
       for (const [index, step] of journeyRecipe.steps.entries()) {
         const sourceNode = activeNode;
-        const targetNode = requireNode(nodeByRoute, routeLookupKey(step.targetRoute, identityPolicy));
         const fromUrl = sanitizePersistedUrl(page.url());
         const startedAt = Date.now();
         const locator = page.getByRole(step.trigger.role, { name: step.trigger.name, exact: true });
         await measure("record.interact", `${sourceNode.route} -> ${step.targetRoute}`, async () => {
           await locator.waitFor({ state: "visible", timeout: 10_000 });
           await locator.click();
-          try {
-            await page.waitForURL((url) => routeLookupKey(url.toString(), identityPolicy) === routeLookupKey(step.targetRoute, identityPolicy), { timeout: 10_000 });
-          } catch {
-            throw new JourneyVerificationError(`Expected route ${step.targetRoute}; browser remained at ${meaningfulRoute(page.url(), identityPolicy)}`);
+          if (step.targetPresentation) {
+            try {
+              await page.getByRole(step.targetPresentation.role, { name: step.targetPresentation.name, exact: true }).waitFor({ state: "visible", timeout: 10_000 });
+            } catch {
+              throw new JourneyVerificationError(`Expected visible ${step.targetPresentation.kind} \"${step.targetPresentation.name}\" on ${step.targetRoute}`);
+            }
+            if (routeLookupKey(page.url(), identityPolicy) !== routeLookupKey(step.targetRoute, identityPolicy)) {
+              throw new JourneyVerificationError(`Expected overlay on route ${step.targetRoute}; browser reached ${meaningfulRoute(page.url(), identityPolicy)}`);
+            }
+          } else {
+            try {
+              await page.waitForURL((url) => routeLookupKey(url.toString(), identityPolicy) === routeLookupKey(step.targetRoute, identityPolicy), { timeout: 10_000 });
+            } catch {
+              throw new JourneyVerificationError(`Expected route ${step.targetRoute}; browser remained at ${meaningfulRoute(page.url(), identityPolicy)}`);
+            }
           }
         });
+        const targetNode = step.targetPresentation
+          ? await observedPresentationNode(page, sourceNode, step.targetRoute, step.targetPresentation)
+          : requireNode(nodeByRoute, routeLookupKey(step.targetRoute, identityPolicy));
+        if (step.targetPresentation) nodes.set(targetNode.id, targetNode);
         activeNode = targetNode;
         await measure("record.settle", step.targetRoute, () => settlePage(page));
         const durationMs = Date.now() - startedAt;
@@ -329,7 +343,8 @@ async function recordJourneys(context: BrowserContext, input: FlowGraph, recipe:
         nodes.set(sourceNode.id, markInteractionObserved(nodes.get(sourceNode.id) ?? sourceNode, step.trigger.role, step.trigger.name));
         edgeIds.push(edge.id);
         nodeIds.push(targetNode.id);
-        console.log(`${journeyRecipe.title}: ${sourceNode.route} --click ${step.trigger.name}--> ${targetNode.route}`);
+        const targetLabel = step.targetPresentation ? `${targetNode.route} [${step.targetPresentation.kind}: ${step.targetPresentation.name}]` : targetNode.route;
+        console.log(`${journeyRecipe.title}: ${sourceNode.route} --click ${step.trigger.name}--> ${targetLabel}`);
       }
       if (journeyRecipe.terminalAssertion) {
         assertionResult = await evaluateTerminalAssertion(page, journeyRecipe.terminalAssertion);
@@ -390,13 +405,53 @@ async function recordJourneys(context: BrowserContext, input: FlowGraph, recipe:
     });
   }
 
-  return flowGraphSchema.parse({
+  return applyObservedInteractionReceipts(flowGraphSchema.parse({
     ...input,
     project: { ...input.project, generatedAt: new Date().toISOString() },
-    nodes: input.nodes.map((node) => nodes.get(node.id) ?? node),
+    nodes: [...nodes.values()],
     edges,
     journeys: [...observedJourneys, ...journeys],
+  }));
+}
+
+async function observedPresentationNode(
+  page: Page,
+  source: ScreenNode,
+  targetRoute: string,
+  target: NonNullable<JourneyRecipe["journeys"][number]["steps"][number]["targetPresentation"]>,
+): Promise<ScreenNode> {
+  const presentation = await inspectPresentation(page);
+  if (presentation.kind !== target.kind) {
+    throw new JourneyVerificationError(`Expected ${target.kind} \"${target.name}\"; browser evidence identified ${presentation.kind}`);
+  }
+  const expectedOverlay = `${target.kind === "modal" ? "dialog" : target.kind}:${target.name}`;
+  if (!presentation.overlays.includes(expectedOverlay)) {
+    throw new JourneyVerificationError(`Expected ${target.kind} \"${target.name}\"; captured overlays were ${presentation.overlays.join(", ") || "none"}`);
+  }
+  const route = meaningfulRoute(targetRoute, identityPolicy);
+  const id = `screen:runtime:${shortHash(`${route}:${activePersona}:${target.kind}:${target.name}`)}`;
+  const identity = buildScreenIdentity({
+    route,
+    routeTemplate: source.identity?.routeTemplate ?? pathnameOf(route),
+    persona: activePersona,
+    stateKey: target.kind,
+    presentation,
+    policy: identityPolicy,
   });
+  return {
+    id,
+    title: `${source.title} · ${target.name}`,
+    route,
+    sourceFile: source.sourceFile,
+    kind: target.kind,
+    stateKey: target.kind,
+    confidence: 1,
+    persona: activePersona,
+    identity,
+    diagnostics: [],
+    interactiveTargets: [],
+    evidence: [{ kind: "observed", detail: `Visible ${target.kind} \"${target.name}\" after an explicit journey action` }],
+  };
 }
 
 function upsertObservedEdge(
@@ -773,7 +828,7 @@ function applyIdentityModel(input: FlowGraph, policy: IdentityPolicy): FlowGraph
         persona: node.persona,
         stateKey: node.stateKey,
         presentation: node.identity?.presentation ?? {
-          kind: node.kind === "modal" ? "modal" : "page",
+          kind: node.kind === "modal" || node.kind === "drawer" || node.kind === "popover" ? node.kind : "page",
           overlays: [],
           slots: [],
         },

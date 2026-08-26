@@ -163,6 +163,7 @@ function Studio({ graph: sourceGraph }: { graph: FlowGraph }) {
   const playerReturnFocusRef = useRef<HTMLElement | null>(null);
   const inspectorCloseRef = useRef<HTMLButtonElement>(null);
   const inspectorReturnFocusRef = useRef<HTMLElement | null>(null);
+  const detailsReturnFocusRef = useRef<HTMLElement | null>(null);
   const flowInstanceRef = useRef<ReactFlowInstance<Node<FlowNodeData>, Edge>>(null);
   const historyInitializedRef = useRef(false);
   const applyingHistoryRef = useRef(false);
@@ -184,6 +185,10 @@ function Studio({ graph: sourceGraph }: { graph: FlowGraph }) {
   const closeInspector = useCallback(() => {
     setInspectorNodeId(null);
     window.requestAnimationFrame(() => inspectorReturnFocusRef.current?.focus());
+  }, []);
+  const closeDetails = useCallback(() => {
+    setSelectedNodeId("");
+    window.requestAnimationFrame(() => detailsReturnFocusRef.current?.focus());
   }, []);
   const entryNodeId = graph.nodes.find((node) => node.route === "/")?.id ?? graph.nodes[0]?.id ?? "";
   const reachableNodeIds = useMemo(() => reachableFrom(entryNodeId, graph.edges), [entryNodeId, graph.edges]);
@@ -341,11 +346,11 @@ function Studio({ graph: sourceGraph }: { graph: FlowGraph }) {
     const closeDetailsOnEscape = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
       event.preventDefault();
-      setSelectedNodeId("");
+      closeDetails();
     };
     document.addEventListener("keydown", closeDetailsOnEscape);
     return () => document.removeEventListener("keydown", closeDetailsOnEscape);
-  }, [inspectorNodeId, selectedNodeId, showPlayer]);
+  }, [closeDetails, inspectorNodeId, selectedNodeId, showPlayer]);
   useEffect(() => {
     if (evidenceView === "screens") return;
     const animationFrame = window.requestAnimationFrame(() => {
@@ -443,9 +448,25 @@ function Studio({ graph: sourceGraph }: { graph: FlowGraph }) {
   const handleNodeClick = useCallback((_: unknown, node: Node<FlowNodeData>) => {
     if (selectionMode) toggleHandoffNode(node.id);
     else {
+      detailsReturnFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
       setShowPlayer(false);
       setInspectorNodeId(null);
       setSelectedNodeId(node.id);
+    }
+  }, [selectionMode, toggleHandoffNode]);
+  const handleFlowKeyDown = useCallback((event: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== "Enter" || !(event.target instanceof HTMLElement)) return;
+    const nodeElement = event.target.closest<HTMLElement>(".react-flow__node[data-id]");
+    const nodeId = nodeElement?.getAttribute("data-id");
+    if (!nodeElement || !nodeId) return;
+    event.preventDefault();
+    event.stopPropagation();
+    if (selectionMode) toggleHandoffNode(nodeId);
+    else {
+      detailsReturnFocusRef.current = nodeElement;
+      setShowPlayer(false);
+      setInspectorNodeId(null);
+      setSelectedNodeId(nodeId);
     }
   }, [selectionMode, toggleHandoffNode]);
   const handleNodeDoubleClick = useCallback((_: unknown, node: Node<FlowNodeData>) => openInspector(node.id), [openInspector]);
@@ -662,7 +683,7 @@ function Studio({ graph: sourceGraph }: { graph: FlowGraph }) {
           <button className="public-demo-guide-close" type="button" onClick={() => setShowDemoGuide(false)} aria-label="Close introduction">×</button>
           <p className="eyebrow">The product is the demo</p>
           <h1>See the UI you actually built.</h1>
-          <p>Drag these screens around. Follow a path. Click any screen to attach a precise change and copy an agent-ready brief.</p>
+          <p>Drag these screens around. Follow a path—even into a modal or drawer that never changes the URL. Click any state to attach a precise change and copy an agent-ready brief.</p>
           <ol>
             <li><span>01</span><strong>Move a screen</strong></li>
             <li><span>02</span><strong>Open its context</strong></li>
@@ -830,10 +851,12 @@ function Studio({ graph: sourceGraph }: { graph: FlowGraph }) {
                 nodesConnectable={false}
                 edgesReconnectable={false}
                 elementsSelectable={false}
+                onKeyDown={handleFlowKeyDown}
                 onNodeClick={handleNodeClick}
                 onSelectionChange={({ nodes: selectedFlowNodes }) => {
                   const keyboardSelectedNode = selectedFlowNodes.at(-1);
                   if (!selectionMode && keyboardSelectedNode && keyboardSelectedNode.id !== selectedNodeId) {
+                    detailsReturnFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
                     setSelectedNodeId(keyboardSelectedNode.id);
                   }
                 }}
@@ -870,7 +893,7 @@ function Studio({ graph: sourceGraph }: { graph: FlowGraph }) {
             </div>
           {selectedNode && reviewAudit && selectedFinding && evidenceView !== "screens" && (
             <aside className="node-drawer audit-drawer" aria-label={`${selectedNode.title} check details`}>
-              <button className="drawer-close" type="button" onClick={() => setSelectedNodeId("")} aria-label="Close details">×</button>
+              <button className="drawer-close" type="button" onClick={closeDetails} aria-label="Close details">×</button>
               <div><span>{auditEvidenceLabel(selectedFinding.evidence)}</span><strong>{selectedFinding.title}</strong></div>
               <code>{selectedFinding.sourceFile}</code>
               <p>{selectedFinding.detail}</p>
@@ -879,12 +902,12 @@ function Studio({ graph: sourceGraph }: { graph: FlowGraph }) {
           )}
           {selectedNode && (!reviewAudit || !selectedFinding) && evidenceView !== "screens" && (
             <aside className="node-drawer core-node-drawer" aria-label={`${selectedNode.title} screen details`}>
-              <button className="drawer-close" type="button" onClick={() => setSelectedNodeId("")} aria-label="Close details">×</button>
+              <button className="drawer-close" type="button" onClick={closeDetails} aria-label="Close details">×</button>
               <div className="drawer-identity">
                 <span>Selected · click another screen or press Esc</span>
                 <strong>{selectedNode.title}</strong>
                 <code>{selectedNode.route}</code>
-                <small>{selectedNode.id === entryNodeId ? "Starting screen" : selectedJourneyIndex >= 0 ? `Step ${selectedJourneyIndex + 1} of the current path` : "Not on the current path"}</small>
+                <small>{selectedNode.identity && selectedNode.identity.presentation.kind !== "page" ? `${selectedNode.identity.presentation.kind} state · ` : ""}{selectedNode.id === entryNodeId ? "Starting screen" : selectedJourneyIndex >= 0 ? `Step ${selectedJourneyIndex + 1} of the current path` : "Not on the current path"}</small>
               </div>
               <div className="core-connection-grid">
                 <section className="causal-section">

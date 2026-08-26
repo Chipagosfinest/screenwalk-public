@@ -159,6 +159,24 @@ test("accepts bounded terminal journey assertions and rejects assertion DSL expa
   }).success, false);
 });
 
+test("accepts an explicitly targeted same-route overlay state", () => {
+  const result = journeyRecipeSchema.safeParse({
+    schemaVersion: "screenbranch.recipe.v0",
+    journeys: [{
+      id: "open-invite-drawer",
+      title: "Find team invitations",
+      startRoute: "/dashboard",
+      steps: [{
+        targetRoute: "/dashboard",
+        targetPresentation: { kind: "drawer", role: "dialog", name: "Invite teammates" },
+        trigger: { role: "button", name: "Invite people" },
+      }],
+      terminalAssertion: { type: "visible-role", role: "dialog", name: "Invite teammates" },
+    }],
+  });
+  assert.equal(result.success, true);
+});
+
 test("accepts a durable local journey run receipt", () => {
   assert.equal(journeyRunReceiptSchema.safeParse({
     schemaVersion: "screenwalk.journey-run.v0",

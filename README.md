@@ -29,6 +29,8 @@ Screenwalk closes that loop:
 
 It can also help you find “zombie UI”: old screens, hidden branches, and forgotten flows still exposed by the codebase. Screenwalk calls these **unconnected** or **unproven**, not dead. A direct link, flag, sign-in state, or missing recipe may still make them intentional.
 
+For dashboard-heavy apps, an explicit journey recipe can also record a meaningful modal, drawer, or popover as a separate UI state on the same route. Screenwalk records the safe trigger and visible result; it does not click arbitrary controls or crawl every DOM mutation.
+
 ## Get started
 
 Keep the target app running, then execute Screenwalk from npm:

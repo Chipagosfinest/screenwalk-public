@@ -22,6 +22,12 @@ function reviewStatusLabel(status?: HandoffReviewStatus): string {
   return "not classified";
 }
 
+function presentationLabel(node: FlowGraph["nodes"][number]): string {
+  const presentation = node.identity?.presentation;
+  if (!presentation || presentation.kind === "page") return "page";
+  return `${presentation.kind}${presentation.overlays.length > 0 ? ` · ${presentation.overlays.join(", ")}` : ""}`;
+}
+
 export function evidenceKindsForHandoff(node: FlowGraph["nodes"][number]): string {
   const kinds = new Set<string>();
   for (const item of node.evidence) kinds.add(item.kind === "static" ? "found in code" : item.kind === "observed" ? "followed in browser" : item.kind);
@@ -50,6 +56,7 @@ export function formatScreenReviewPrompt(
     "",
     `Screen: ${node.title}`,
     `Route: ${node.route}`,
+    `UI state: ${presentationLabel(node)}`,
     `Source: ${node.sourceFile}`,
     `What Screenwalk checked: ${evidenceKindsForHandoff(node)}`,
     `Active path: ${journey?.title ?? "none selected"}`,
@@ -100,6 +107,7 @@ export function formatJourneyChangeBrief(
       return [
         `### ${index + 1}. ${node.title}`,
         `- Route: ${node.route}`,
+        `- UI state: ${presentationLabel(node)}`,
         `- Source: ${node.sourceFile}`,
         `- Observed: ${node.capture?.quality === "ready" ? "yes, Screenwalk opened this screen" : "no, found in code only"}`,
         `- Change: ${review?.note?.trim() || "Inspect this screen in the flow and make only a defensible change."}`,

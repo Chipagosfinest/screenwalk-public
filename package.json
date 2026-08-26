@@ -1,6 +1,6 @@
 {
   "name": "screenwalk",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Map the UI states and observed flows of a running web product for human and AI review.",
   "type": "module",
   "bin": {
