@@ -7,10 +7,17 @@ settings:
 importers:
 
   .:
+    dependencies:
+      playwright:
+        specifier: 1.55.1
+        version: 1.55.1
     devDependencies:
       '@types/node':
         specifier: 22.17.2
         version: 22.17.2
+      esbuild:
+        specifier: 0.28.2
+        version: 0.28.2
       typescript:
         specifier: 7.0.2
         version: 7.0.2

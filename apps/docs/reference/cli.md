@@ -35,6 +35,8 @@ Validates a graph against the current versioned contract without starting captur
 | `--environment <name>` | Explicit target identity such as `local`, `preview`, `staging`, or `production`. Otherwise Screenwalk records a URL-based inference. |
 | `--deployment-id <id>` | Attach the exact deployment identifier to the completed capture when the platform exposes one. |
 | `--out <path>` | Write Inspect topology JSON to a specific path. Inspect only. |
+| `--output <path>` | Write the current captured graph to a specific path. |
+| `--assets-dir <path>` | Write captured images to a specific directory. |
 | `--json` | Print machine-readable Doctor results. Doctor only. |
 | `--viewports <list>` | `desktop,mobile` (default), `desktop`, or `mobile`. |
 | `--setup <file>` | Capture another access view with an environment-backed setup recipe. |

@@ -29,7 +29,7 @@ It can also help you find “zombie UI”: old screens, hidden branches, and for
 
 ## Get started
 
-Screenwalk is public source beta software, but it is not yet published to npm. Clone the repository and keep the target app running:
+Screenwalk is public source beta software, but it is not yet published to npm. The npm package is release-gated by a clean tarball installation test. Until that release passes, clone the repository and keep the target app running:
 
 ```bash
 git clone https://github.com/Chipagosfinest/screenwalk-public.git
@@ -94,7 +94,7 @@ If more than one browser surface exists, Screenwalk refuses to guess and lists v
 
 Screenwalk is ready to test on Next.js App Router, plain HTML, client-routed SPAs, and bounded password-gated views. Next.js has the deepest source understanding; browser capture is broader. Automatic discovery is capped at 30 screens, one link depth, and safe same-origin anchors. It does not claim to render every possible state or prove that every discovered screen is intended.
 
-Deferred: arbitrary form submission, CAPTCHA/MFA/OAuth consent, native mobile capture, Figma export, hosted private-code ingestion, autonomous fixes, and public npm distribution.
+Deferred: arbitrary form submission, CAPTCHA/MFA/OAuth consent, native mobile capture, Figma export, hosted private-code ingestion, and autonomous fixes.
 
 ## Help test it
 
@@ -110,6 +110,7 @@ pnpm typecheck
 pnpm build
 pnpm certify:beta
 pnpm verify:clean
+pnpm verify:package
 ```
 
-The root package remains `private: true` to prevent accidental npm publication. The source repository is available under the [MIT License](LICENSE).
+The package is configured for npm but remains unpublished until `pnpm verify:package` passes from a clean install. The source repository is available under the [MIT License](LICENSE).
