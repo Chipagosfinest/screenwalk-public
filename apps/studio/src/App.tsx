@@ -637,7 +637,7 @@ function Studio({ graph: sourceGraph }: { graph: FlowGraph }) {
       <header className="topbar">
         <div className="brand">
           <span className="brand-mark">S</span>
-          <div><strong>Screenwalk</strong><small>{isHostedDemo ? "Interactive product map" : `${graph.project.name} · ${scanContext}`}</small></div>
+          <div><strong>Screenwalk</strong><small>{isHostedDemo ? "UI map and review workspace" : `${graph.project.name} · ${scanContext}`}</small></div>
         </div>
         <div className="topbar-actions core-topbar-actions">
           <button
@@ -681,9 +681,9 @@ function Studio({ graph: sourceGraph }: { graph: FlowGraph }) {
       {showDemoGuide && (
         <section className="public-demo-guide" aria-label="Interactive demo introduction">
           <button className="public-demo-guide-close" type="button" onClick={() => setShowDemoGuide(false)} aria-label="Close introduction">×</button>
-          <p className="eyebrow">The product is the demo</p>
-          <h1>See the UI you actually built.</h1>
-          <p>Drag these screens around. Follow a path—even into a modal or drawer that never changes the URL. Click any state to attach a precise change and copy an agent-ready brief.</p>
+          <p className="eyebrow">Your product, in one view</p>
+          <h1>Map the UI you actually built.</h1>
+          <p>See every discovered screen and path—including hidden routes, modals, and drawers. Review the real interface, then copy precise changes back to your coding agent.</p>
           <ol>
             <li><span>01</span><strong>Move a screen</strong></li>
             <li><span>02</span><strong>Open its context</strong></li>
@@ -1282,7 +1282,7 @@ function layoutEdges(graph: FlowGraph, journeyEdgeSet: Set<string>, reviewAudit:
     const returnEdge = (levels.get(edge.target) ?? 0) <= (levels.get(edge.source) ?? 0);
     const edgeKey = auditEdgeKey(edge);
     const auditMatch = auditEdgeKeys.size > 0 ? auditEdgeKeys.has(edgeKey) : auditNodeIds.has(edge.source) || auditNodeIds.has(edge.target);
-    const stroke = reviewAudit ? auditMatch ? "#b85d39" : "#b9b0a5" : active ? "#d96b47" : observed ? "#4d8d63" : "#a9a093";
+    const stroke = reviewAudit ? auditMatch ? "#a65f20" : "#b9b0a5" : active ? "#3f5bd8" : observed ? "#3d8762" : "#a9a093";
     const mutedByContext = !reviewAudit && contextEdgeIds.size > 0 && !contextMatch;
     const siblingCount = outgoingCounts.get(edge.source) ?? 0;
     const showLabel = displayMode === "ui" && !mutedByContext && (Boolean(edge.conditions?.length) || active || (!returnEdge && ((siblingCount > 1 && siblingCount <= 5) || (contextMatch && siblingCount <= 6))));
@@ -1304,8 +1304,8 @@ function layoutEdges(graph: FlowGraph, journeyEdgeSet: Set<string>, reviewAudit:
         opacity: reviewAudit && !auditMatch ? 0.16 : mutedByContext ? 0.1 : returnEdge && !active && !contextMatch ? 0.14 : 1,
       },
       zIndex: active || contextMatch ? 3 : 0,
-      labelStyle: { fill: active ? "#7f3f2c" : "#5f584f", fontSize: 11, fontWeight: 700 },
-      labelBgStyle: { fill: "#fbfaf7", fillOpacity: 0.98, stroke: active ? "#e3b5a4" : "#d8d1c7", strokeWidth: 1 },
+      labelStyle: { fill: active ? "#3048b8" : "#5f584f", fontSize: 11, fontWeight: 700 },
+      labelBgStyle: { fill: "#fbfaf7", fillOpacity: 0.98, stroke: active ? "#b9c4f5" : "#d8d1c7", strokeWidth: 1 },
       labelBgPadding: [8, 5] as [number, number],
       labelBgBorderRadius: 6,
     };

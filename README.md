@@ -5,9 +5,11 @@
 [![npm downloads](https://img.shields.io/npm/dw/screenwalk)](https://www.npmjs.com/package/screenwalk)
 [![TypeScript](https://img.shields.io/badge/TypeScript-first-3178c6)](https://www.typescriptlang.org/)
 
-**See the product you actually built. Review it as a whole. Change it with precision.**
+**Map the UI you actually built.**
 
-Screenwalk turns a web repository and its running UI into a shared, reviewable map of real screens and paths. It shows what the browser opened, what the code suggests, and what remains unproven. A builder or designer can point to an exact screen, write a specific critique and an observable **Done when**, then copy one evidence-rich change brief to a coding agent or engineer.
+Screenwalk shows every discovered screen and path—including hidden routes and same-route states—so you can review the real interface and copy precise changes back to your coding agent. It combines repository evidence with browser proof: what the browser opened, what code suggests, and what remains unproven.
+
+A builder or designer can point to an exact screen, write a specific critique and an observable **Done when**, then copy one evidence-rich change brief to a coding agent or engineer.
 
 After the change, run Screenwalk again under the same conditions and check the result.
 
