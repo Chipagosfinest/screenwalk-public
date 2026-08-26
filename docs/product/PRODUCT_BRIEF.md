@@ -67,6 +67,7 @@ Include:
 - graph-to-composition playback;
 - graph snapshots, immutable manifests, and diff contract;
 - selected-screen and finding handoff to an existing coding agent.
+- recipe-driven capture of meaningful modal, drawer, and popover states;
 - screen-specific critique and observable acceptance criteria;
 - a same-context rerun instruction in every copied change brief;
 - a public-beta feedback path and local-only privacy boundary.

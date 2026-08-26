@@ -103,8 +103,8 @@ export const screenNodeSchema = z.object({
   title: z.string().min(1),
   route: z.string().min(1),
   sourceFile: z.string().min(1),
-  kind: z.enum(["page", "modal", "loading", "error", "not-found", "unknown"]),
-  stateKey: z.enum(["default", "loading", "error", "not-found", "modal", "unknown"]).default("default"),
+  kind: z.enum(["page", "modal", "drawer", "popover", "loading", "error", "not-found", "unknown"]),
+  stateKey: z.enum(["default", "loading", "error", "not-found", "modal", "drawer", "popover", "unknown"]).default("default"),
   confidence: z.number().min(0).max(1),
   persona: z.string().default("default"),
   identity: screenIdentitySchema.optional(),
@@ -197,6 +197,11 @@ export const journeyRecipeSchema = z.object({
     startRoute: z.string().startsWith("/"),
     steps: z.array(z.object({
       targetRoute: z.string().startsWith("/"),
+      targetPresentation: z.object({
+        kind: z.enum(["modal", "drawer", "popover"]),
+        role: z.enum(["dialog", "region", "complementary", "menu"]),
+        name: z.string().min(1),
+      }).optional(),
       conditions: z.array(transitionConditionSchema).min(1).max(4).optional(),
       conditionLogic: z.enum(["all", "any"]).optional(),
       trigger: z.object({

@@ -70,12 +70,12 @@
       "capture": {
         "kind": "captured",
         "quality": "ready",
-        "asset": "/captures/fixture/home-desktop-d442557b.png",
-        "url": "http://127.0.0.1:3111/",
+        "asset": "/captures/fixture/home-desktop-60021e98.png",
+        "url": "http://127.0.0.1:3000/",
         "title": "Walkable — Home",
-        "observedAt": "2026-08-26T03:13:57.666Z",
-        "contentHash": "88e6c907",
-        "captureId": "capture:49cbef9b",
+        "observedAt": "2026-08-26T17:53:02.450Z",
+        "contentHash": "8e61b8ad",
+        "captureId": "capture:482dd6fb",
         "context": {
           "persona": "default",
           "viewport": "desktop",
@@ -94,12 +94,12 @@
         "desktop": {
           "kind": "captured",
           "quality": "ready",
-          "asset": "/captures/fixture/home-desktop-d442557b.png",
-          "url": "http://127.0.0.1:3111/",
+          "asset": "/captures/fixture/home-desktop-60021e98.png",
+          "url": "http://127.0.0.1:3000/",
           "title": "Walkable — Home",
-          "observedAt": "2026-08-26T03:13:57.666Z",
-          "contentHash": "88e6c907",
-          "captureId": "capture:49cbef9b",
+          "observedAt": "2026-08-26T17:53:02.450Z",
+          "contentHash": "8e61b8ad",
+          "captureId": "capture:482dd6fb",
           "context": {
             "persona": "default",
             "viewport": "desktop",
@@ -118,11 +118,11 @@
           "kind": "captured",
           "quality": "ready",
           "asset": "/captures/fixture/home-mobile-d442557b.png",
-          "url": "http://127.0.0.1:3111/",
+          "url": "http://127.0.0.1:3000/",
           "title": "Walkable — Home",
-          "observedAt": "2026-08-26T03:14:05.721Z",
-          "contentHash": "873c7d84",
-          "captureId": "capture:5c4c8023",
+          "observedAt": "2026-08-26T17:52:53.298Z",
+          "contentHash": "15e6a9dd",
+          "captureId": "capture:f39ff342",
           "context": {
             "persona": "default",
             "viewport": "mobile",
@@ -187,6 +187,18 @@
           "href": "https://example.com/",
           "status": "blocked",
           "reason": "External navigation is never auto-clicked."
+        },
+        {
+          "id": "target:review-activity",
+          "role": "button",
+          "name": "Review activity",
+          "status": "observed"
+        },
+        {
+          "id": "target:invite-people",
+          "role": "button",
+          "name": "Invite people",
+          "status": "observed"
         }
       ],
       "evidence": [
@@ -505,6 +517,311 @@
           "detail": "Same-origin link discovered in the rendered application"
         }
       ]
+    },
+    {
+      "id": "screen:runtime:4bdfda7d",
+      "title": "Home · Recent activity",
+      "route": "/",
+      "sourceFile": "public/index.html",
+      "kind": "modal",
+      "stateKey": "modal",
+      "confidence": 1,
+      "persona": "default",
+      "identity": {
+        "familyId": "family:f65ddfdd2022",
+        "variantId": "variant:a76dd8c7e0e7",
+        "routeTemplate": "/",
+        "semanticUrlState": {
+          "query": {}
+        },
+        "presentation": {
+          "kind": "modal",
+          "overlays": [
+            "dialog:Recent activity"
+          ],
+          "slots": []
+        },
+        "review": {
+          "status": "automatic",
+          "reasons": [],
+          "suggestions": []
+        }
+      },
+      "capture": {
+        "kind": "captured",
+        "quality": "ready",
+        "asset": "/captures/fixture/home-desktop-4bc3ecec.png",
+        "url": "http://127.0.0.1:3000/",
+        "title": "Walkable — Home",
+        "observedAt": "2026-08-26T17:53:01.236Z",
+        "contentHash": "444d0014",
+        "captureId": "capture:feea1483",
+        "context": {
+          "persona": "default",
+          "viewport": "desktop",
+          "browser": "chromium",
+          "locale": "en",
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "network": "online"
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        }
+      },
+      "captureVariants": {
+        "desktop": {
+          "kind": "captured",
+          "quality": "ready",
+          "asset": "/captures/fixture/home-desktop-4bc3ecec.png",
+          "url": "http://127.0.0.1:3000/",
+          "title": "Walkable — Home",
+          "observedAt": "2026-08-26T17:53:01.236Z",
+          "contentHash": "444d0014",
+          "captureId": "capture:feea1483",
+          "context": {
+            "persona": "default",
+            "viewport": "desktop",
+            "browser": "chromium",
+            "locale": "en",
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "network": "online"
+          },
+          "viewport": {
+            "width": 1280,
+            "height": 800
+          }
+        }
+      },
+      "diagnostics": [],
+      "interactiveTargets": [
+        {
+          "id": "target:7ae45676",
+          "role": "link",
+          "name": "See plans",
+          "href": "http://127.0.0.1:55373/plans.html",
+          "status": "unobserved",
+          "reason": "Visible safe link has not been observed completing a transition."
+        },
+        {
+          "id": "target:d0a57c0a",
+          "role": "link",
+          "name": "How it works",
+          "href": "http://127.0.0.1:55373/about.html",
+          "status": "unobserved",
+          "reason": "Visible safe link has not been observed completing a transition."
+        },
+        {
+          "id": "target:d9399f6b",
+          "role": "link",
+          "name": "Open mirrored route",
+          "href": "http://127.0.0.1:55373/mirror.html",
+          "status": "unobserved",
+          "reason": "Visible safe link has not been observed completing a transition."
+        },
+        {
+          "id": "target:54e25476",
+          "role": "link",
+          "name": "Jump to details",
+          "href": "http://127.0.0.1:55373/#details",
+          "status": "local",
+          "reason": "Same-screen link or anchor; it is not a route transition."
+        },
+        {
+          "id": "target:9485d25f",
+          "role": "link",
+          "name": "External proof",
+          "href": "https://example.com/",
+          "status": "blocked",
+          "reason": "External navigation is never auto-clicked."
+        },
+        {
+          "id": "target:21c7df0e",
+          "role": "button",
+          "name": "Review activity",
+          "status": "unsafe",
+          "reason": "Requires an explicit journey recipe before Screenwalk will interact with it."
+        },
+        {
+          "id": "target:0fed1c84",
+          "role": "button",
+          "name": "Invite people",
+          "status": "unsafe",
+          "reason": "Requires an explicit journey recipe before Screenwalk will interact with it."
+        },
+        {
+          "id": "target:33fd8756",
+          "role": "button",
+          "name": "Close recent activity",
+          "status": "unsafe",
+          "reason": "Requires an explicit journey recipe before Screenwalk will interact with it."
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "observed",
+          "detail": "Visible modal \"Recent activity\" after an explicit journey action"
+        },
+        {
+          "kind": "observed",
+          "detail": "Browser capture of http://127.0.0.1:55373/"
+        }
+      ]
+    },
+    {
+      "id": "screen:runtime:cc3e2c8a",
+      "title": "Home · Invite teammates",
+      "route": "/",
+      "sourceFile": "public/index.html",
+      "kind": "drawer",
+      "stateKey": "drawer",
+      "confidence": 1,
+      "persona": "default",
+      "identity": {
+        "familyId": "family:bb66fde787d3",
+        "variantId": "variant:fff255ea82aa",
+        "routeTemplate": "/",
+        "semanticUrlState": {
+          "query": {}
+        },
+        "presentation": {
+          "kind": "drawer",
+          "overlays": [
+            "dialog:Invite teammates",
+            "drawer:Invite teammates"
+          ],
+          "slots": []
+        },
+        "review": {
+          "status": "automatic",
+          "reasons": [],
+          "suggestions": []
+        }
+      },
+      "capture": {
+        "kind": "captured",
+        "quality": "ready",
+        "asset": "/captures/fixture/home-desktop-b1df219e.png",
+        "url": "http://127.0.0.1:3000/",
+        "title": "Walkable — Home",
+        "observedAt": "2026-08-26T17:53:03.368Z",
+        "contentHash": "12305ff2",
+        "captureId": "capture:f6ccb0be",
+        "context": {
+          "persona": "default",
+          "viewport": "desktop",
+          "browser": "chromium",
+          "locale": "en",
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "network": "online"
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        }
+      },
+      "captureVariants": {
+        "desktop": {
+          "kind": "captured",
+          "quality": "ready",
+          "asset": "/captures/fixture/home-desktop-b1df219e.png",
+          "url": "http://127.0.0.1:3000/",
+          "title": "Walkable — Home",
+          "observedAt": "2026-08-26T17:53:03.368Z",
+          "contentHash": "12305ff2",
+          "captureId": "capture:f6ccb0be",
+          "context": {
+            "persona": "default",
+            "viewport": "desktop",
+            "browser": "chromium",
+            "locale": "en",
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "network": "online"
+          },
+          "viewport": {
+            "width": 1280,
+            "height": 800
+          }
+        }
+      },
+      "diagnostics": [],
+      "interactiveTargets": [
+        {
+          "id": "target:db38a61f",
+          "role": "link",
+          "name": "See plans",
+          "href": "http://127.0.0.1:55373/plans.html",
+          "status": "unobserved",
+          "reason": "Visible safe link has not been observed completing a transition."
+        },
+        {
+          "id": "target:54660e59",
+          "role": "link",
+          "name": "How it works",
+          "href": "http://127.0.0.1:55373/about.html",
+          "status": "unobserved",
+          "reason": "Visible safe link has not been observed completing a transition."
+        },
+        {
+          "id": "target:cec5f52b",
+          "role": "link",
+          "name": "Open mirrored route",
+          "href": "http://127.0.0.1:55373/mirror.html",
+          "status": "unobserved",
+          "reason": "Visible safe link has not been observed completing a transition."
+        },
+        {
+          "id": "target:9907bdea",
+          "role": "link",
+          "name": "Jump to details",
+          "href": "http://127.0.0.1:55373/#details",
+          "status": "local",
+          "reason": "Same-screen link or anchor; it is not a route transition."
+        },
+        {
+          "id": "target:02278a65",
+          "role": "link",
+          "name": "External proof",
+          "href": "https://example.com/",
+          "status": "blocked",
+          "reason": "External navigation is never auto-clicked."
+        },
+        {
+          "id": "target:2ee52f73",
+          "role": "button",
+          "name": "Review activity",
+          "status": "unsafe",
+          "reason": "Requires an explicit journey recipe before Screenwalk will interact with it."
+        },
+        {
+          "id": "target:31f8f03e",
+          "role": "button",
+          "name": "Invite people",
+          "status": "unsafe",
+          "reason": "Requires an explicit journey recipe before Screenwalk will interact with it."
+        },
+        {
+          "id": "target:21e5ada2",
+          "role": "button",
+          "name": "Close invite teammates",
+          "status": "unsafe",
+          "reason": "Requires an explicit journey recipe before Screenwalk will interact with it."
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "observed",
+          "detail": "Visible drawer \"Invite teammates\" after an explicit journey action"
+        },
+        {
+          "kind": "observed",
+          "detail": "Browser capture of http://127.0.0.1:55373/"
+        }
+      ]
     }
   ],
   "edges": [
@@ -563,9 +880,103 @@
           "detail": "Clicked link \"How it works\" from http://127.0.0.1:3111/ to http://127.0.0.1:3111/about.html"
         }
       ]
+    },
+    {
+      "id": "edge:observed:screen:root:screen:runtime:4bdfda7d:b9eba7e6",
+      "source": "screen:root",
+      "target": "screen:runtime:4bdfda7d",
+      "action": "Click Review activity",
+      "conditionLogic": "all",
+      "confidence": 1,
+      "observations": [
+        {
+          "id": "observation:6a900c41",
+          "observedAt": "2026-08-26T17:53:01.281Z",
+          "fromUrl": "http://127.0.0.1:3000/",
+          "toUrl": "http://127.0.0.1:3000/",
+          "durationMs": 893,
+          "trigger": {
+            "kind": "click",
+            "role": "button",
+            "name": "Review activity"
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "observed",
+          "detail": "Clicked button \"Review activity\" from http://127.0.0.1:55373/ to http://127.0.0.1:55373/"
+        }
+      ]
+    },
+    {
+      "id": "edge:observed:screen:root:screen:runtime:cc3e2c8a:27bf0f2d",
+      "source": "screen:root",
+      "target": "screen:runtime:cc3e2c8a",
+      "action": "Click Invite people",
+      "conditionLogic": "all",
+      "confidence": 1,
+      "observations": [
+        {
+          "id": "observation:9e712d0b",
+          "observedAt": "2026-08-26T17:53:03.414Z",
+          "fromUrl": "http://127.0.0.1:3000/",
+          "toUrl": "http://127.0.0.1:3000/",
+          "durationMs": 877,
+          "trigger": {
+            "kind": "click",
+            "role": "button",
+            "name": "Invite people"
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "observed",
+          "detail": "Clicked button \"Invite people\" from http://127.0.0.1:55373/ to http://127.0.0.1:55373/"
+        }
+      ]
     }
   ],
   "journeys": [
+    {
+      "id": "journey:html-activity-modal",
+      "title": "Find recent activity",
+      "nodeIds": [
+        "screen:root",
+        "screen:runtime:4bdfda7d"
+      ],
+      "edgeIds": [
+        "edge:observed:screen:root:screen:runtime:4bdfda7d:b9eba7e6"
+      ],
+      "kind": "observed",
+      "provenance": "verified-end-to-end",
+      "verification": {
+        "status": "passed",
+        "asserted": true,
+        "completedAt": "2026-08-26T17:53:01.287Z",
+        "receipt": "sample:local-journey-receipt"
+      }
+    },
+    {
+      "id": "journey:html-invite-drawer",
+      "title": "Find teammate invitations",
+      "nodeIds": [
+        "screen:root",
+        "screen:runtime:cc3e2c8a"
+      ],
+      "edgeIds": [
+        "edge:observed:screen:root:screen:runtime:cc3e2c8a:27bf0f2d"
+      ],
+      "kind": "observed",
+      "provenance": "verified-end-to-end",
+      "verification": {
+        "status": "passed",
+        "asserted": true,
+        "completedAt": "2026-08-26T17:53:03.418Z",
+        "receipt": "sample:local-journey-receipt"
+      }
+    },
     {
       "id": "journey:auto:14d345bd",
       "title": "Home → Plans.html",
@@ -611,7 +1022,9 @@
     "addedNodeIds": [
       "screen:runtime:3704e254",
       "screen:runtime:db5b1640",
-      "screen:runtime:dbcf6e57"
+      "screen:runtime:dbcf6e57",
+      "screen:runtime:4bdfda7d",
+      "screen:runtime:cc3e2c8a"
     ],
     "removedNodeIds": [
       "screen:dashboard",

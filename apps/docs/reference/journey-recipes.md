@@ -69,6 +69,28 @@ Reaching `targetRoute` proves navigation. A passing terminal assertion proves on
 
 Recipes without a terminal assertion remain supported and are labeled `recorded-unverified`.
 
+## Same-route modals and drawers
+
+Routes are not the only meaningful product states. A recipe can explicitly target a modal, drawer, or popover that appears after a safe click without changing the URL:
+
+```json
+{
+  "targetRoute": "/dashboard",
+  "targetPresentation": {
+    "kind": "drawer",
+    "role": "dialog",
+    "name": "Invite teammates"
+  },
+  "trigger": { "role": "button", "name": "Invite people" }
+}
+```
+
+`role` and `name` are exact accessible locators. Screenwalk waits for that visible target, confirms the browser stayed on `targetRoute`, verifies that the rendered presentation matches `kind`, then records a separate captured screen state and observed transition.
+
+Presentation detection stays explicit: modals use an open native `<dialog>` or `[role="dialog"][aria-modal="true"]`; drawers use `data-screenwalk-presentation="drawer"` or `data-screenwalk-drawer` with `data-state="open"`; popovers use the native open popover state.
+
+This is deliberately recipe-driven. Screenwalk does not click arbitrary buttons or enumerate every DOM mutation. Use it for a meaningful review state whose trigger is safe and whose accessible outcome is known. Supported target roles are `dialog`, `region`, `complementary`, and `menu`.
+
 ## Conditional relationships
 
 Conditions explain why one edge exists. They do not execute a feature-flag provider or reproduce its targeting rules.

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "screenbranch.recipe.v0",
+  "journeys": [
+    {
+      "id": "journey:html-activity-modal",
+      "title": "Find recent activity",
+      "startRoute": "/",
+      "steps": [
+        {
+          "targetRoute": "/",
+          "targetPresentation": {
+            "kind": "modal",
+            "role": "dialog",
+            "name": "Recent activity"
+          },
+          "trigger": { "role": "button", "name": "Review activity" }
+        }
+      ],
+      "terminalAssertion": {
+        "type": "visible-role",
+        "role": "dialog",
+        "name": "Recent activity"
+      }
+    },
+    {
+      "id": "journey:html-invite-drawer",
+      "title": "Find teammate invitations",
+      "startRoute": "/",
+      "steps": [
+        {
+          "targetRoute": "/",
+          "targetPresentation": {
+            "kind": "drawer",
+            "role": "dialog",
+            "name": "Invite teammates"
+          },
+          "trigger": { "role": "button", "name": "Invite people" }
+        }
+      ],
+      "terminalAssertion": {
+        "type": "visible-role",
+        "role": "dialog",
+        "name": "Invite teammates"
+      }
+    }
+  ]
+}

@@ -11,6 +11,7 @@ Screenwalk is public source beta software available through npm.
 - public plus password-gated access views through bounded setup recipes;
 - runtime, reachability, responsive, capture-quality, and coverage findings;
 - path playback, screen selection, and copyable agent handoffs;
+- recipe-driven modal, drawer, and popover states on the same route;
 - watch mode, immutable run manifests, capture hashes, and graph diffs.
 
 ## What to expect from a beta

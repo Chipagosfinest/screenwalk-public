@@ -39,6 +39,7 @@ test("copy-for-agent prompt from fixture Home includes route, source file, and p
     outgoing,
   );
   assert.equal(prompt.includes(`Route: ${home.route}\n`), true);
+  assert.equal(prompt.includes("UI state: page\n"), true);
   assert.equal(prompt.includes(`Source: ${home.sourceFile}\n`), true);
   assert.equal(prompt.includes(`What Screenwalk checked: ${evidenceKindsForHandoff(home)}\n`), true);
   assert.equal(home.evidence.some((item) => item.kind === "static"), true);
@@ -48,6 +49,32 @@ test("copy-for-agent prompt from fixture Home includes route, source file, and p
   assert.match(prompt, /followed in browser/);
   assert.match(prompt, /screenshot saved/);
   assert.doesNotMatch(prompt, /unconnected is dead/i);
+});
+
+test("handoff names an observed overlay state separately from its route", () => {
+  const overlay = flowGraphSchema.parse({
+    ...graph,
+    nodes: graph.nodes.map((node, index) => index === 0 ? {
+      ...node,
+      id: "screen:drawer",
+      title: "Home · Invite teammates",
+      kind: "drawer",
+      stateKey: "drawer",
+      identity: {
+        familyId: "family:drawer",
+        variantId: "variant:drawer",
+        routeTemplate: "/",
+        semanticUrlState: { query: {} },
+        presentation: { kind: "drawer", overlays: ["drawer:Invite teammates"], slots: [] },
+        review: { status: "automatic", reasons: [], suggestions: [] },
+      },
+    } : node),
+    edges: [],
+    journeys: [],
+  }).nodes[0];
+  assert.ok(overlay);
+  const prompt = formatScreenReviewPrompt(graph, overlay, undefined, undefined, undefined, "Anyone", [], []);
+  assert.match(prompt, /UI state: drawer · drawer:Invite teammates/);
 });
 
 test("change brief carries flow context, a unique critique, acceptance criteria, and rerun instructions", () => {
