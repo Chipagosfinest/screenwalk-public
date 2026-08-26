@@ -1,6 +1,6 @@
 # Screenwalk product brief
 
-> **See the product you actually built. Review it as a whole. Change it with precision.**
+> **Map the UI you actually built.**
 
 ## Customer and painful job
 

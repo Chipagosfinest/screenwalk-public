@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: Screenwalk
-  text: See the app you actually built.
-  tagline: Review the real product as a whole. Point at exact screens, write specific changes, and copy one clean brief to your agent.
+  text: Map the UI you actually built.
+  tagline: See every discovered screen and path. Review the real product as a whole, then copy precise changes back to your coding agent.
   image:
     src: /screenwalk-mark.svg
     alt: Screenwalk route mark
