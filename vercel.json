@@ -1,7 +1,20 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "pnpm --filter @screenbranch/studio build",
-  "outputDirectory": "apps/studio/dist",
+  "cleanUrls": true,
+  "buildCommand": "pnpm build:web",
+  "outputDirectory": "apps/web-dist",
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "screenwalk.dev"
+        }
+      ],
+      "destination": "/__docs/:path*"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -21,10 +34,6 @@
         {
           "key": "X-Frame-Options",
           "value": "DENY"
-        },
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow, noarchive"
         },
         {
           "key": "Permissions-Policy",

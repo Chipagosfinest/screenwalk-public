@@ -37,14 +37,15 @@ export default defineConfig({
     siteTitle: 'Screenwalk',
     search: {provider: 'local'},
     nav: [
+      {text: 'Live demo', link: 'https://screenwalk.app'},
       {text: 'Get started', link: '/guide/quickstart'},
       {text: 'Guides', link: '/guide/how-it-works'},
       {text: 'Reference', link: '/reference/cli'},
       {
-        text: 'Private beta',
+        text: 'Public beta',
         items: [
           {text: 'Beta status', link: '/beta'},
-          {text: 'Report an issue', link: 'https://github.com/Chipagosfinest/screenwalk/issues/new?template=private-beta-feedback.yml'},
+          {text: 'Report an issue', link: 'https://github.com/Chipagosfinest/screenwalk-public/issues/new?template=public-beta-feedback.yml'},
         ],
       },
     ],
@@ -84,21 +85,21 @@ export default defineConfig({
           {text: 'Supported apps and limits', link: '/reference/support'},
           {text: 'Error codes', link: '/reference/error-codes'},
           {text: 'Troubleshooting', link: '/troubleshooting'},
-          {text: 'Private beta', link: '/beta'},
+          {text: 'Public beta', link: '/beta'},
         ],
       },
     ],
     outline: {level: [2, 3], label: 'On this page'},
     docFooter: {prev: 'Previous', next: 'Next'},
     editLink: {
-      pattern: 'https://github.com/Chipagosfinest/screenwalk/edit/main/apps/docs/:path',
+      pattern: 'https://github.com/Chipagosfinest/screenwalk-public/edit/main/apps/docs/:path',
       text: 'Improve this page',
     },
     socialLinks: [
-      {icon: 'github', link: 'https://github.com/Chipagosfinest/screenwalk'},
+      {icon: 'github', link: 'https://github.com/Chipagosfinest/screenwalk-public'},
     ],
     footer: {
-      message: 'Local-first. Evidence-backed. Private beta.',
+      message: 'Local-first. Evidence-backed. Public beta.',
       copyright: 'Screenwalk',
     },
   },

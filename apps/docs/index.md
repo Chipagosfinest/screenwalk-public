@@ -10,11 +10,11 @@ hero:
     alt: Screenwalk route mark
   actions:
     - theme: brand
+      text: Try the live map
+      link: https://screenwalk.app
+    - theme: alt
       text: Map your first app
       link: /guide/quickstart
-    - theme: alt
-      text: How it works
-      link: /guide/how-it-works
 
 features:
   - title: Actual UI, not route boxes

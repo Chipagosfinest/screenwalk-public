@@ -13,7 +13,7 @@ After the change, run Screenwalk again under the same conditions and check the r
 
 ![Screenwalk Studio mapping a synthetic captured UI into product paths and an agent-ready change brief](docs/assets/screenwalk-studio.png)
 
-[Documentation](apps/docs/index.md) · [Quickstart](apps/docs/guide/quickstart.md) · [Designer test](docs/testing/FIRST_TESTERS.md) · [Public beta](apps/docs/beta.md)
+[Live demo](https://screenwalk.app) · [Documentation](https://screenwalk.dev) · [Quickstart](https://screenwalk.dev/guide/quickstart) · [Designer test](docs/testing/FIRST_TESTERS.md) · [Public beta](https://screenwalk.dev/beta)
 
 ## Why Screenwalk
 
