@@ -4,13 +4,16 @@ import { spawn, spawnSync } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import { watch } from "node:fs";
 import { access, copyFile, mkdir, readFile, unlink, writeFile } from "node:fs/promises";
-import { basename, dirname, resolve } from "node:path";
+import { createServer } from "node:http";
+import { basename, dirname, extname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { inferEnvironment } from "./environment.mjs";
 import { isUiSourceFile } from "./source-watch.mjs";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const invocationCwd = process.cwd();
+const packagedRuntime = process.env.SCREENWALK_PACKAGED_RUNTIME === "1";
+const commandPrefix = packagedRuntime ? "npx screenwalk" : "pnpm screenwalk";
 const args = process.argv.slice(2);
 if (args[0] === "doctor") {
   await runDoctor(args.slice(1));
@@ -18,7 +21,7 @@ if (args[0] === "doctor") {
 }
 if (args[0] === "validate") {
   const graph = resolve(args[1] ?? "screenbranch.graph.json");
-  const result = spawnSync("pnpm", ["--filter", "@screenbranch/scanner", "exec", "tsx", "src/cli.ts", "validate", graph], { cwd: repositoryRoot, stdio: "inherit" });
+  const result = runInternalCli("scanner", ["validate", graph]);
   process.exit(result.status ?? 1);
 }
 if (args[0] === "inspect") {
@@ -26,21 +29,21 @@ if (args[0] === "inspect") {
   inspectArgs[0] = resolve(invocationCwd, inspectArgs[0] ?? ".");
   const outputIndex = inspectArgs.indexOf("--out");
   if (outputIndex >= 0 && inspectArgs[outputIndex + 1]) inspectArgs[outputIndex + 1] = resolve(invocationCwd, inspectArgs[outputIndex + 1]);
-  const result = spawnSync("pnpm", ["--filter", "@screenbranch/scanner", "exec", "tsx", "src/cli.ts", "inspect", ...inspectArgs], { cwd: repositoryRoot, stdio: "inherit" });
+  const result = runInternalCli("scanner", ["inspect", ...inspectArgs]);
   process.exit(result.status ?? 1);
 }
 if (args.includes("--help") || args.includes("-h")) {
   console.log(`Screenwalk — turn a running product into an actual-UI flow map
 
 Usage:
-  pnpm screenwalk <running-app-url> [options]
-  pnpm screenwalk <project> --url <running-app-url> [options]
-  pnpm screenwalk doctor <project> --url <running-app-url> [--json]
-  pnpm screenwalk inspect <project> [--out topology.json]
-  pnpm screenwalk validate <graph.json>
+  ${commandPrefix} <running-app-url> [options]
+  ${commandPrefix} <project> --url <running-app-url> [options]
+  ${commandPrefix} doctor <project> --url <running-app-url> [--json]
+  ${commandPrefix} inspect <project> [--out topology.json]
+  ${commandPrefix} validate <graph.json>
 
 Example:
-  pnpm screenwalk ../my-app --url http://127.0.0.1:3000
+  ${commandPrefix} ../my-app --url http://127.0.0.1:3000
 
 Options:
   --service <id>           Select a detected web service in a monorepo
@@ -51,6 +54,8 @@ Options:
   --identity-policy <file> Override meaningful query/hash identity rules (auto-loads screenwalk.identity.json)
   --max-screens <number>   Maximum discovered screens (default: 30)
   --discover-depth <n>     Safe same-origin link depth (default: 1)
+  --output <file>          Save the current graph to this file
+  --assets-dir <dir>       Save captured images to this directory
   --timing-json <path>     Save route-level timing evidence
   --watch                  Recapture affected routes when source files change
   --no-open                Do not open the Studio browser tab
@@ -89,13 +94,14 @@ const viewports = option("--viewports", "desktop,mobile").split(",").filter((val
 if (viewports.length === 0) throw new Error("--viewports must include desktop, mobile, or both");
 const noOpen = args.includes("--no-open");
 const noStudio = args.includes("--no-studio");
-const graphPath = resolve(option("--output", resolve(repositoryRoot, "apps/studio/public/screenbranch.graph.json")));
-const assetsDirectory = resolve(option("--assets-dir", resolve(repositoryRoot, "apps/studio/public/captures/current")));
+const defaultOutputRoot = packagedRuntime ? resolve(invocationCwd, ".screenwalk") : resolve(repositoryRoot, "apps/studio/public");
+const graphPath = resolve(option("--output", resolve(defaultOutputRoot, "screenbranch.graph.json")));
+const assetsDirectory = resolve(option("--assets-dir", resolve(defaultOutputRoot, "captures/current")));
 const assetPrefix = option("--asset-prefix", "/captures/current");
 const timingOutput = option("--timing-json");
 const requestedRoutes = option("--routes", "").split(",").filter(Boolean);
 const watchRequested = args.includes("--watch");
-const runsDirectory = resolve(option("--runs-dir", resolve(repositoryRoot, "output/runs")));
+const runsDirectory = resolve(option("--runs-dir", packagedRuntime ? resolve(defaultOutputRoot, "runs") : resolve(repositoryRoot, "output/runs")));
 const runId = `${new Date().toISOString().replace(/[:.]/g, "-")}-${randomUUID().slice(0, 8)}`;
 const runStartedIso = new Date().toISOString();
 const previousGraph = await readJsonIfPresent(graphPath);
@@ -116,12 +122,9 @@ await mkdir(assetsDirectory, { recursive: true });
 const runStartedAt = Date.now();
 console.log("[2/4] Scanning routes and source links…");
 const scanStartedAt = Date.now();
-const scanArgs = ["--filter", "@screenbranch/scanner", "scan", projectRoot, "--out", graphPath];
+const scanArgs = ["scan", projectRoot, "--out", graphPath];
 if (serviceId) scanArgs.push("--service", serviceId);
-const scan = spawnSync("pnpm", scanArgs, {
-  cwd: repositoryRoot,
-  encoding: "utf8",
-});
+const scan = runInternalCli("scanner", scanArgs, "pipe");
 const scanDuration = Date.now() - scanStartedAt;
 
 if (scan.status === 0) {
@@ -194,7 +197,7 @@ for (const [index, viewport] of viewports.entries()) {
   ];
   for (const accessView of accessViews) {
     const captureArgs = [
-      "--filter", "@screenbranch/capture", "capture", graphPath,
+      "capture", graphPath,
       "--base-url", baseUrl,
       "--assets-dir", assetsDirectory,
       "--asset-prefix", assetPrefix,
@@ -209,7 +212,7 @@ for (const [index, viewport] of viewports.entries()) {
     if (identityPolicyPath) captureArgs.push("--identity-policy", identityPolicyPath);
     if (timingOutput) captureArgs.push("--timing-json", viewportTimingPath(timingOutput, viewport, accessView.persona));
     const captureStartedAt = Date.now();
-    run("pnpm", captureArgs, `SB_CAPTURE_${viewport.toUpperCase()}_${accessView.persona.toUpperCase().replaceAll("-", "_")}`);
+    runCapture(captureArgs, `SB_CAPTURE_${viewport.toUpperCase()}_${accessView.persona.toUpperCase().replaceAll("-", "_")}`);
     const duration = Date.now() - captureStartedAt;
     captureDurations.push({ viewport: `${viewport}/${accessView.label}`, duration });
     console.log(`      ✓ ${accessView.label} ${viewport} capture ready in ${formatDuration(duration)}`);
@@ -252,17 +255,23 @@ const variants = Object.fromEntries(viewports.map((viewport) => [viewport, graph
 const accessViewCount = new Set(graph.nodes.map((node) => node.persona)).size;
 console.log(`\nMap ready · ${viewports.map((viewport) => `${variants[viewport]} useful ${viewport} screens`).join(" · ")} · ${accessViewCount} access ${accessViewCount === 1 ? "view" : "views"} · ${observedEdges} observed transitions`);
 console.log(`Timing    · scan ${formatDuration(scanDuration)} · ${captureDurations.map(({ viewport, duration }) => `${viewport} ${formatDuration(duration)}`).join(" · ")} · total ${formatDuration(Date.now() - runStartedAt)}`);
+console.log(`Output    · ${graphPath}`);
 
 if (!noStudio) {
   console.log("[4/4] Opening the local Studio…");
-  const studioUrl = "http://127.0.0.1:5173/?graph=local";
-  if (!(await reachable(studioUrl))) {
-    const studio = spawn("pnpm", ["--filter", "@screenbranch/studio", "dev", "--host", "127.0.0.1"], {
-      cwd: repositoryRoot,
-      stdio: "inherit",
-    });
-    process.on("SIGINT", () => studio.kill("SIGINT"));
-    await waitUntilReachable(studioUrl, 12_000);
+  let studioUrl;
+  if (packagedRuntime) {
+    studioUrl = await startPackagedStudio();
+  } else {
+    studioUrl = "http://127.0.0.1:5173/?graph=local";
+    if (!(await reachable(studioUrl))) {
+      const studio = spawn("pnpm", ["--filter", "@screenbranch/studio", "dev", "--host", "127.0.0.1"], {
+        cwd: repositoryRoot,
+        stdio: "inherit",
+      });
+      process.on("SIGINT", () => studio.kill("SIGINT"));
+      await waitUntilReachable(studioUrl, 12_000);
+    }
   }
   if (!noOpen && process.platform === "darwin") spawn("open", [studioUrl], { detached: true, stdio: "ignore" }).unref();
   console.log(`      ✓ Studio ready at ${studioUrl}`);
@@ -272,13 +281,88 @@ if (!noStudio) {
 
 if (watchRequested) startSourceWatcher();
 
-function run(command, commandArgs, errorCode) {
-  const result = spawnSync(command, commandArgs, { cwd: repositoryRoot, stdio: "inherit" });
+function runInternalCli(name, commandArgs, output = "inherit") {
+  if (packagedRuntime) {
+    return spawnSync(process.execPath, [resolve(repositoryRoot, `dist/${name}.mjs`), ...commandArgs], {
+      cwd: invocationCwd,
+      encoding: output === "pipe" ? "utf8" : undefined,
+      stdio: output,
+    });
+  }
+  const packageName = name === "scanner" ? "@screenbranch/scanner" : "@screenbranch/capture";
+  return spawnSync("pnpm", ["--filter", packageName, "exec", "tsx", "src/cli.ts", ...commandArgs], {
+    cwd: repositoryRoot,
+    encoding: output === "pipe" ? "utf8" : undefined,
+    stdio: output,
+  });
+}
+
+function runCapture(commandArgs, errorCode) {
+  const result = runInternalCli("capture", commandArgs);
   if (result.status !== 0) {
     console.error(`\n${errorCode}: Capture did not finish. Review the last browser message, confirm ${baseUrl} still loads, then rerun the same command.`);
     console.error("Add --timing-json /tmp/screenwalk-timings.json when the failure is slow or intermittent.");
     process.exit(result.status ?? 1);
   }
+}
+
+async function startPackagedStudio() {
+  const studioRoot = resolve(repositoryRoot, "dist/studio");
+  if (!(await exists(resolve(studioRoot, "index.html")))) {
+    throw new Error("Studio assets are missing from this Screenwalk package.");
+  }
+  const server = createServer(async (request, response) => {
+    const requestUrl = new URL(request.url ?? "/", "http://127.0.0.1");
+    try {
+      if (requestUrl.pathname === "/screenbranch.graph.json") return await sendFile(response, graphPath, "application/json; charset=utf-8");
+      if (requestUrl.pathname === assetPrefix || requestUrl.pathname.startsWith(`${assetPrefix}/`)) {
+        const relativeAsset = requestUrl.pathname.slice(assetPrefix.length).replace(/^\/+/, "");
+        return await sendFile(response, safePath(assetsDirectory, relativeAsset));
+      }
+      const relativeStudioPath = requestUrl.pathname === "/" ? "index.html" : requestUrl.pathname.replace(/^\/+/, "");
+      const candidate = safePath(studioRoot, relativeStudioPath);
+      if (await exists(candidate)) return await sendFile(response, candidate);
+      return await sendFile(response, resolve(studioRoot, "index.html"), "text/html; charset=utf-8");
+    } catch (error) {
+      response.writeHead(404, { "content-type": "text/plain; charset=utf-8" });
+      response.end(error instanceof Error ? error.message : "Not found");
+    }
+  });
+  await new Promise((resolveListen, reject) => {
+    server.once("error", reject);
+    server.listen(0, "127.0.0.1", resolveListen);
+  });
+  const address = server.address();
+  if (!address || typeof address === "string") throw new Error("Studio server did not provide a local port.");
+  process.on("SIGINT", () => server.close());
+  process.on("SIGTERM", () => server.close());
+  return `http://127.0.0.1:${address.port}/?graph=local`;
+}
+
+function safePath(root, relativePath) {
+  const candidate = resolve(root, relativePath);
+  if (candidate !== root && !candidate.startsWith(`${root}${sep}`)) throw new Error("Invalid Studio asset path.");
+  return candidate;
+}
+
+async function sendFile(response, path, explicitType) {
+  const content = await readFile(path);
+  const types = {
+    ".css": "text/css; charset=utf-8",
+    ".html": "text/html; charset=utf-8",
+    ".js": "text/javascript; charset=utf-8",
+    ".json": "application/json; charset=utf-8",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".png": "image/png",
+    ".svg": "image/svg+xml",
+    ".woff2": "font/woff2",
+  };
+  response.writeHead(200, {
+    "cache-control": path === graphPath ? "no-store" : "public, max-age=3600",
+    "content-type": explicitType ?? types[extname(path).toLowerCase()] ?? "application/octet-stream",
+  });
+  response.end(content);
 }
 
 function formatDuration(milliseconds) {

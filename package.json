@@ -1,16 +1,42 @@
 {
   "name": "screenwalk",
   "version": "0.1.0",
-  "private": true,
+  "description": "Map the UI states and observed flows of a running web product for human and AI review.",
+  "type": "module",
   "bin": {
-    "screenwalk": "scripts/screenbranch.mjs",
-    "screenbranch": "scripts/screenbranch.mjs"
+    "screenwalk": "dist/cli.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chipagosfinest/screenwalk-public.git"
+  },
+  "homepage": "https://github.com/Chipagosfinest/screenwalk-public#readme",
+  "bugs": {
+    "url": "https://github.com/Chipagosfinest/screenwalk-public/issues"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ui",
+    "user-flows",
+    "playwright",
+    "design-review",
+    "ai"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "packageManager": "pnpm@11.18.0",
   "scripts": {
     "screenwalk": "node scripts/screenbranch.mjs",
     "screenbranch": "node scripts/screenbranch.mjs",
     "build": "pnpm --filter @screenbranch/studio build && pnpm --filter @screenwalk/docs build",
+    "build:package": "pnpm --filter @screenbranch/studio build && node scripts/build-package.mjs",
     "dev": "pnpm --filter @screenbranch/studio dev",
     "docs:dev": "pnpm --filter @screenwalk/docs dev",
     "docs:build": "pnpm --filter @screenwalk/docs build",
@@ -21,10 +47,16 @@
     "verify:clean": "node scripts/verify-clean-checkout.mjs",
     "docs:check": "node --test scripts/docs.test.mjs && pnpm docs:build",
     "check:public": "node scripts/check-public-corpus.mjs",
-    "typecheck": "pnpm -r typecheck"
+    "typecheck": "pnpm -r typecheck",
+    "verify:package": "node scripts/verify-package.mjs",
+    "prepack": "pnpm build:package"
+  },
+  "dependencies": {
+    "playwright": "1.55.1"
   },
   "devDependencies": {
     "@types/node": "22.17.2",
+    "esbuild": "0.28.2",
     "typescript": "7.0.2"
   }
 }
