@@ -5,6 +5,16 @@
   "outputDirectory": "apps/web-dist",
   "rewrites": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "screenwalk.dev"
+        }
+      ],
+      "destination": "/__docs/"
+    },
+    {
       "source": "/:path*",
       "has": [
         {
