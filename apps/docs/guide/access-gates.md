@@ -4,7 +4,7 @@ By default, Screenwalk records what a public visitor can reach, including a logi
 
 ```bash
 SCREENWALK_PREVIEW_PASSWORD="your-local-or-preview-password" \
-  pnpm screenwalk /absolute/path/to/app \
+  npx screenwalk /absolute/path/to/app \
   --url http://127.0.0.1:3000 \
   --setup /absolute/path/to/preview.setup.json
 ```

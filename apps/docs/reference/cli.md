@@ -3,11 +3,11 @@
 ## Commands
 
 ```text
-pnpm screenwalk <running-app-url> [options]
-pnpm screenwalk <project> --url <running-app-url> [options]
-pnpm screenwalk inspect <project> [--out <topology.json>]
-pnpm screenwalk doctor <project> --url <running-app-url> [--json]
-pnpm screenwalk validate <graph.json>
+npx screenwalk <running-app-url> [options]
+npx screenwalk <project> --url <running-app-url> [options]
+npx screenwalk inspect <project> [--out <topology.json>]
+npx screenwalk doctor <project> --url <running-app-url> [--json]
+npx screenwalk validate <graph.json>
 ```
 
 ### `screenwalk`

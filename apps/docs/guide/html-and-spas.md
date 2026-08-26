@@ -3,10 +3,10 @@
 Screenwalk can map real rendered UI without requiring Next.js or a source adapter.
 
 ```bash
-pnpm screenwalk /absolute/path/to/html-site \
+npx screenwalk /absolute/path/to/html-site \
   --url http://127.0.0.1:8080
 
-pnpm screenwalk /absolute/path/to/vite-spa \
+npx screenwalk /absolute/path/to/vite-spa \
   --url http://127.0.0.1:5173
 ```
 
@@ -25,7 +25,7 @@ Defaults are intentionally conservative:
 Raise the link depth only for a deliberate deeper audit:
 
 ```bash
-pnpm screenwalk /absolute/path/to/app \
+npx screenwalk /absolute/path/to/app \
   --url http://127.0.0.1:5173 \
   --discover-depth 2 \
   --max-screens 50

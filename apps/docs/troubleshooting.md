@@ -3,7 +3,7 @@
 Start with Doctor. It catches the common environment and connection problems before capture:
 
 ```bash
-pnpm screenwalk doctor /absolute/path/to/app \
+npx screenwalk doctor /absolute/path/to/app \
   --url http://127.0.0.1:3000
 ```
 
@@ -46,7 +46,7 @@ Run with `--watch`. A failed recapture preserves the last good graph and prints 
 Validate the artifact directly:
 
 ```bash
-pnpm screenwalk validate /absolute/path/to/graph.json
+npx screenwalk validate /absolute/path/to/graph.json
 ```
 
 ## The map looks wrong

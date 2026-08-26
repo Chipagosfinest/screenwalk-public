@@ -4,15 +4,13 @@ Go from a running web app to an actual-UI product map. The happy path uses one S
 
 ## 1. Install Screenwalk
 
-Screenwalk is a public source beta, so run it from this repository:
+Run the public beta directly from npm:
 
 ```bash
-git clone https://github.com/Chipagosfinest/screenwalk-public.git
-cd screenwalk-public
-pnpm install
+npx screenwalk --help
 ```
 
-The verified beta environment uses Node.js 22 and pnpm 11.18.0, with a Chromium-based browser available to Playwright or Chrome.
+The verified beta environment uses Node.js 22.14 or newer, with a Chromium-based browser available to Playwright or Chrome. pnpm users can substitute `pnpm dlx screenwalk` for `npx screenwalk`.
 
 ## 2. Start the app you want to map
 
@@ -28,7 +26,7 @@ Leave that process running and note the exact local URL. Screenwalk connects to 
 ## 3. Build the map
 
 ```bash
-pnpm screenwalk /absolute/path/to/your-app \
+npx screenwalk /absolute/path/to/your-app \
   --url http://127.0.0.1:3000
 ```
 
@@ -51,7 +49,7 @@ Counts vary by app. A successful run ends with **Map ready** and a Studio URL; a
 Inventory a repository before choosing a browser surface:
 
 ```bash
-pnpm screenwalk inspect /absolute/path/to/repository --out /tmp/screenwalk-topology.json
+npx screenwalk inspect /absolute/path/to/repository --out /tmp/screenwalk-topology.json
 ```
 
 The inventory distinguishes browser apps, APIs, workers, deployment configuration, public integration contracts, feature-flag providers, and documented environment URLs. Configuration, dependency, and bounded source-reference labels are discovery evidence—not proof that a service or flag is active. Screenwalk does not read flag values or generate a flag combination matrix.
@@ -59,7 +57,7 @@ The inventory distinguishes browser apps, APIs, workers, deployment configuratio
 When multiple browser surfaces exist, select one and name the environment explicitly:
 
 ```bash
-pnpm screenwalk /absolute/path/to/repository \
+npx screenwalk /absolute/path/to/repository \
   --url https://preview.example.com \
   --service apps-web \
   --environment staging \
@@ -71,7 +69,7 @@ Every resulting run carries the selected service, environment, target URL, captu
 If the run cannot start, diagnose the same target without capturing it:
 
 ```bash
-pnpm screenwalk doctor /absolute/path/to/your-app \
+npx screenwalk doctor /absolute/path/to/your-app \
   --url http://127.0.0.1:3000
 ```
 
@@ -102,7 +100,7 @@ The repository includes a plain HTML fixture:
 pnpm --dir fixtures/html-app dev
 
 # Terminal 2, from the Screenwalk repository
-pnpm screenwalk fixtures/html-app --url http://127.0.0.1:3111
+npx screenwalk fixtures/html-app --url http://127.0.0.1:3111
 ```
 
 Next: [learn what Screenwalk observes and what it refuses to guess](/guide/how-it-works).

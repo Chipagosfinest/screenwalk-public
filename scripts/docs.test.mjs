@@ -68,13 +68,13 @@ test('first-minute copy tells people what Screenwalk opened and what to do next'
   assert.doesNotMatch(studio, /A browser opened the real UI\. Click a screen, play a path, then review what still needs proof\./);
 });
 
-test('public source beta docs do not promise a published Screenwalk package', async () => {
-  const userFacing = [resolve(repositoryRoot, 'README.md'), ...pageFiles.map((page) => resolve(docsRoot, page))];
-  for (const file of userFacing) {
-    const source = await readFile(file, 'utf8');
-    assert.doesNotMatch(source, /\bnpx\s+(?:@[^\s/]+\/)?screenwalk\b/i, `${relative(repositoryRoot, file)} promises an unpublished npx package`);
-    assert.doesNotMatch(source, /\b(?:npm|pnpm|yarn)\s+(?:install|add)\s+(?:-g\s+)?screenwalk\b/i, `${relative(repositoryRoot, file)} promises an unpublished package install`);
-  }
+test('public install docs use the published Screenwalk package', async () => {
+  const readme = await readFile(resolve(repositoryRoot, 'README.md'), 'utf8');
+  const quickstart = await readFile(resolve(docsRoot, 'guide/quickstart.md'), 'utf8');
+  assert.match(readme, /npx screenwalk \/absolute\/path\/to\/app/);
+  assert.match(readme, /pnpm dlx screenwalk/);
+  assert.match(quickstart, /npx screenwalk --help/);
+  assert.doesNotMatch(readme, /not yet published to npm/i);
 });
 
 test('agent documentation artifacts cover every page', async () => {
