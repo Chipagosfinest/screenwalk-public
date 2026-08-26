@@ -1,0 +1,49 @@
+# Screenwalk
+
+Screenwalk maps a running web application's actual UI, routes, observed transitions, capture gaps, and browser diagnostics into a local visual workspace.
+
+## Start here
+
+- Product and quickstart: README.md
+- Documentation home: apps/docs/index.md
+- Five-minute first run: apps/docs/guide/quickstart.md
+- Framework cookbook: apps/docs/guide/frameworks.md
+- CLI reference: apps/docs/reference/cli.md
+- Journey recipe reference: apps/docs/reference/journey-recipes.md
+- Supported apps and limits: apps/docs/reference/support.md
+- Error codes: apps/docs/reference/error-codes.md
+- Troubleshooting: apps/docs/troubleshooting.md
+- Documentation authoring contract: docs/WRITING_DOCS.md
+- Agent operating rules: AGENTS.md
+- Graph contract: packages/schema/src/index.ts
+- Scanner: packages/scanner/src
+- Capture and safe discovery: packages/capture/src/cli.ts
+- Studio and audit UX: apps/studio/src/App.tsx
+- Architecture: docs/architecture/ARCHITECTURE.md
+- Current system research: docs/research/2026-08-14-remotion-devx-performance-and-launch.md
+
+## Safe run
+
+1. Keep the target app running on localhost.
+2. Run `pnpm screenwalk doctor /absolute/path/to/app --url http://127.0.0.1:3000 --json`, then `pnpm screenwalk /absolute/path/to/app --url http://127.0.0.1:3000 --no-open --watch`.
+   For a password or test-login gate, add `--setup /absolute/path/to/setup.json`; recipes reference secret environment variable names with `valueFromEnv` and never contain the values themselves.
+3. Open the printed Studio URL.
+4. Use All screens for topology, From Home for entry-reachable branches, Screen library for the capture gallery, and Review findings for evidence and diagnostics.
+5. Use Select screens to build a bounded handoff, then copy routes/files or a ready-to-paste agent prompt. Treat unconnected routes as review candidates, not automatic deletion candidates.
+6. For capture profiling, pass `--timing-json /tmp/screenwalk-timings.json`; never accept a faster run if it drops useful screens, observed transitions, or populated UI.
+
+## Evidence language
+
+- static: found in source; not proof that a user can reach it at runtime.
+- observed: a browser interaction or rendered link was recorded.
+- captured: a desktop or mobile screenshot exists for that run.
+- access view: an independently captured public or allowed browser context; evidence never crosses between them.
+- unobserved or code-only: a known state without current browser proof.
+
+Screenwalk captures versioned snapshots from localhost. Watch mode recaptures changed known routes and keeps the last good graph visible on failure; it is not proof that every transient state has been observed.
+
+## Documentation rule
+
+Use the task-shaped guide before reading internals. The README explains why and proves the outcome; `apps/docs/guide/` teaches workflows; `apps/docs/reference/` defines mechanical contracts. Do not infer a capability from roadmap or research notes when the supported-app matrix says it is deferred.
+
+The docs build also emits `/llms.txt`, `/llms-full.txt`, and raw `/markdown/**` pages for external agents. They are generated from the same user-facing Markdown and must pass `pnpm docs:check`.

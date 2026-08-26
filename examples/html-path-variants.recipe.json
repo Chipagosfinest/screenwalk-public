@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "screenbranch.recipe.v0",
+  "journeys": [
+    {
+      "id": "journey:html-path-variant-a",
+      "title": "Variant A: open plans",
+      "startRoute": "/",
+      "steps": [
+        {
+          "targetRoute": "/plans.html",
+          "conditions": [
+            {
+              "kind": "experiment",
+              "label": "homepage path variant A",
+              "key": "homepage-path",
+              "value": "A",
+              "evidence": "declared"
+            }
+          ],
+          "trigger": { "role": "link", "name": "See plans" }
+        }
+      ],
+      "terminalAssertion": {
+        "type": "visible-role",
+        "role": "heading",
+        "name": "Plans that lead somewhere."
+      }
+    },
+    {
+      "id": "journey:html-path-variant-b",
+      "title": "Variant B: open explanation",
+      "startRoute": "/",
+      "steps": [
+        {
+          "targetRoute": "/about.html",
+          "conditions": [
+            {
+              "kind": "experiment",
+              "label": "homepage path variant B",
+              "key": "homepage-path",
+              "value": "B",
+              "evidence": "declared"
+            }
+          ],
+          "trigger": { "role": "link", "name": "How it works" }
+        }
+      ],
+      "terminalAssertion": {
+        "type": "visible-role",
+        "role": "heading",
+        "name": "HTML is still an application surface."
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "screenbranch.recipe.v0",
+  "journeys": [
+    {
+      "id": "journey:html-path-variant-a-broken",
+      "title": "Broken variant A expectation",
+      "startRoute": "/",
+      "steps": [
+        {
+          "targetRoute": "/plans.html",
+          "conditions": [
+            {
+              "kind": "experiment",
+              "label": "homepage path variant A",
+              "key": "homepage-path",
+              "value": "A",
+              "evidence": "declared"
+            }
+          ],
+          "trigger": { "role": "link", "name": "See plans" }
+        }
+      ],
+      "terminalAssertion": { "type": "visible-text", "text": "Variant A should not contain this text" }
+    }
+  ]
+}

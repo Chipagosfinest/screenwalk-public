@@ -1,0 +1,27 @@
+{
+  "name": "@screenbranch/studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build && node ../../scripts/check-studio-bundle.mjs",
+    "dev": "vite",
+    "test": "tsx --test src/*.test.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@remotion/player": "4.0.509",
+    "@screenbranch/schema": "workspace:*",
+    "@xyflow/react": "12.11.3",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "remotion": "4.0.509"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.13",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.5",
+    "tsx": "4.23.12",
+    "vite": "8.2.1"
+  }
+}

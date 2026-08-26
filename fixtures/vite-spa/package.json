@@ -1,0 +1,10 @@
+{
+  "name": "screenwalk-vite-spa-fixture",
+  "private": true,
+  "scripts": {
+    "dev": "vite --host 127.0.0.1"
+  },
+  "devDependencies": {
+    "vite": "8.2.1"
+  }
+}

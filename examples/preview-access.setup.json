@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "screenbranch.setup.v0",
+  "persona": "preview",
+  "label": "Preview access",
+  "startRoute": "/access",
+  "actions": [
+    {
+      "type": "fill",
+      "locator": {
+        "kind": "label",
+        "name": "Password"
+      },
+      "valueFromEnv": "SCREENWALK_PREVIEW_PASSWORD"
+    },
+    {
+      "type": "click",
+      "locator": {
+        "kind": "role",
+        "role": "button",
+        "name": "Come in"
+      }
+    },
+    {
+      "type": "waitForRoute",
+      "route": "/"
+    }
+  ]
+}

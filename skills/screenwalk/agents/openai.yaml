@@ -1,0 +1,4 @@
+interface:
+  display_name: "Screenwalk"
+  short_description: "Map real UI flows with source-linked evidence"
+  default_prompt: "Use $screenwalk to map this repository and its running localhost into actual desktop and mobile UI flows, surface evidence gaps, and prepare an agent-ready handoff."

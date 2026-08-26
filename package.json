@@ -1,0 +1,30 @@
+{
+  "name": "screenwalk",
+  "version": "0.1.0",
+  "private": true,
+  "bin": {
+    "screenwalk": "scripts/screenbranch.mjs",
+    "screenbranch": "scripts/screenbranch.mjs"
+  },
+  "packageManager": "pnpm@11.18.0",
+  "scripts": {
+    "screenwalk": "node scripts/screenbranch.mjs",
+    "screenbranch": "node scripts/screenbranch.mjs",
+    "build": "pnpm --filter @screenbranch/studio build && pnpm --filter @screenwalk/docs build",
+    "dev": "pnpm --filter @screenbranch/studio dev",
+    "docs:dev": "pnpm --filter @screenwalk/docs dev",
+    "docs:build": "pnpm --filter @screenwalk/docs build",
+    "docs:preview": "pnpm --filter @screenwalk/docs preview",
+    "scan:fixture": "pnpm --filter @screenbranch/scanner scan ../../fixtures/next-app --out ../../apps/studio/src/data/demo-graph.json",
+    "test": "pnpm --filter @screenbranch/schema test && pnpm --filter @screenbranch/scanner test && pnpm --filter @screenbranch/capture test && pnpm --filter @screenbranch/studio test && node --test scripts/screenbranch.test.mjs scripts/docs.test.mjs",
+    "certify:beta": "node scripts/certify-beta.mjs",
+    "verify:clean": "node scripts/verify-clean-checkout.mjs",
+    "docs:check": "node --test scripts/docs.test.mjs && pnpm docs:build",
+    "check:public": "node scripts/check-public-corpus.mjs",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "devDependencies": {
+    "@types/node": "22.17.2",
+    "typescript": "7.0.2"
+  }
+}

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Screenwalk — See the app you actually built">
+  <rect width="1200" height="630" fill="#171512"/>
+  <rect x="52" y="48" width="1096" height="534" rx="30" fill="#201d19" stroke="#3a332c"/>
+
+  <g transform="translate(94 90)">
+    <rect width="56" height="56" rx="14" fill="#f5eee5"/>
+    <path d="M14 15h14v12h14v15H28V30H14z" fill="none" stroke="#29241f" stroke-width="5" stroke-linejoin="round"/>
+    <circle cx="14" cy="15" r="4" fill="#c9774d"/>
+    <circle cx="42" cy="42" r="4" fill="#c9774d"/>
+    <text x="74" y="40" fill="#f7f2eb" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="30" font-weight="700">Screenwalk</text>
+  </g>
+
+  <text x="94" y="250" fill="#d99469" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="24" font-weight="700" letter-spacing="1.5">SEE YOUR WHOLE PRODUCT</text>
+  <text x="94" y="315" fill="#fffaf3" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="48" font-weight="750" letter-spacing="-1.5">See the app you</text>
+  <text x="94" y="370" fill="#fffaf3" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="48" font-weight="750" letter-spacing="-1.5">actually built.</text>
+  <text x="94" y="428" fill="#beb4a8" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="23">Actual UI · Connected paths · Visible gaps</text>
+
+  <g transform="translate(705 90)">
+    <path d="M80 86H228V154H348M228 154V300H348M228 154H348" fill="none" stroke="#7ea486" stroke-width="4"/>
+    <path d="M228 154V380H348" fill="none" stroke="#c9774d" stroke-width="4"/>
+    <circle cx="228" cy="154" r="7" fill="#f2b38d"/>
+
+    <g>
+      <rect x="0" y="28" width="120" height="118" rx="14" fill="#f3ede3" stroke="#d9cfc0"/>
+      <rect x="12" y="42" width="96" height="58" rx="7" fill="#ded7cd"/>
+      <rect x="12" y="110" width="56" height="7" rx="3" fill="#6a6056"/>
+      <rect x="12" y="124" width="80" height="5" rx="2" fill="#b5aa9d"/>
+      <rect x="11" y="37" width="35" height="13" rx="6" fill="#4e7b58"/>
+      <text x="18" y="47" fill="#fff" font-family="sans-serif" font-size="7" font-weight="700">CAPTURED</text>
+    </g>
+
+    <g>
+      <rect x="168" y="96" width="120" height="118" rx="14" fill="#f3ede3" stroke="#d9cfc0"/>
+      <rect x="180" y="110" width="96" height="58" rx="7" fill="#e7d8ca"/>
+      <rect x="180" y="178" width="52" height="7" rx="3" fill="#6a6056"/>
+      <rect x="180" y="192" width="76" height="5" rx="2" fill="#b5aa9d"/>
+      <rect x="179" y="105" width="35" height="13" rx="6" fill="#4e7b58"/>
+      <text x="186" y="115" fill="#fff" font-family="sans-serif" font-size="7" font-weight="700">OBSERVED</text>
+    </g>
+
+    <g>
+      <rect x="348" y="96" width="120" height="118" rx="14" fill="#f3ede3" stroke="#d9cfc0"/>
+      <rect x="360" y="110" width="96" height="58" rx="7" fill="#d6dfd8"/>
+      <rect x="360" y="178" width="62" height="7" rx="3" fill="#6a6056"/>
+      <rect x="360" y="192" width="78" height="5" rx="2" fill="#b5aa9d"/>
+      <rect x="359" y="105" width="35" height="13" rx="6" fill="#4e7b58"/>
+      <text x="366" y="115" fill="#fff" font-family="sans-serif" font-size="7" font-weight="700">CAPTURED</text>
+    </g>
+
+    <g>
+      <rect x="348" y="242" width="120" height="118" rx="14" fill="#f3ede3" stroke="#d9cfc0"/>
+      <rect x="360" y="256" width="96" height="58" rx="7" fill="#ddd6cc"/>
+      <rect x="360" y="324" width="48" height="7" rx="3" fill="#6a6056"/>
+      <rect x="360" y="338" width="72" height="5" rx="2" fill="#b5aa9d"/>
+      <rect x="359" y="251" width="35" height="13" rx="6" fill="#4e7b58"/>
+      <text x="366" y="261" fill="#fff" font-family="sans-serif" font-size="7" font-weight="700">CAPTURED</text>
+    </g>
+
+    <g>
+      <rect x="348" y="388" width="120" height="118" rx="14" fill="#2a2520" stroke="#c9774d" stroke-width="2" stroke-dasharray="6 6"/>
+      <text x="408" y="435" text-anchor="middle" fill="#f1b18b" font-family="sans-serif" font-size="13" font-weight="700">VISIBLE GAP</text>
+      <text x="408" y="460" text-anchor="middle" fill="#a99e92" font-family="sans-serif" font-size="11">Not captured</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "screenbranch.recipe.v0",
+  "journeys": [
+    {
+      "id": "journey:html-plans",
+      "title": "Open plans",
+      "startRoute": "/",
+      "steps": [
+        {
+          "targetRoute": "/plans.html",
+          "conditions": [
+            {
+              "kind": "access",
+              "label": "public visitor",
+              "evidence": "declared"
+            }
+          ],
+          "trigger": { "role": "link", "name": "See plans" }
+        }
+      ],
+      "terminalAssertion": {
+        "type": "visible-role",
+        "role": "heading",
+        "name": "Plans that lead somewhere."
+      }
+    }
+  ]
+}

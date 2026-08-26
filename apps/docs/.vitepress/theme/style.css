@@ -1,0 +1,126 @@
+:root {
+  --vp-c-bg: #f8f5ef;
+  --vp-c-bg-alt: #f0ebe2;
+  --vp-c-bg-soft: #f3eee6;
+  --vp-c-divider: #d9d1c5;
+  --vp-c-text-1: #29241f;
+  --vp-c-text-2: #655d54;
+  --vp-c-text-3: #8a8177;
+  --vp-c-brand-1: #7b4f31;
+  --vp-c-brand-2: #946142;
+  --vp-c-brand-3: #af7957;
+  --vp-c-brand-soft: rgba(123, 79, 49, 0.12);
+  --vp-button-brand-bg: #29241f;
+  --vp-button-brand-hover-bg: #443b33;
+  --vp-button-brand-active-bg: #171411;
+  --vp-button-brand-text: #fffdf9;
+  --vp-font-family-base: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --vp-font-family-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+.dark {
+  --vp-c-bg: #191715;
+  --vp-c-bg-alt: #211e1b;
+  --vp-c-bg-soft: #28231f;
+  --vp-c-divider: #403a34;
+  --vp-c-text-1: #f4efe7;
+  --vp-c-text-2: #c6bdb2;
+  --vp-c-text-3: #958b80;
+  --vp-c-brand-1: #d69b74;
+  --vp-c-brand-2: #e1ad89;
+  --vp-c-brand-3: #edc1a3;
+  --vp-c-brand-soft: rgba(214, 155, 116, 0.14);
+  --vp-button-brand-bg: #f0e7dc;
+  --vp-button-brand-hover-bg: #fff8ef;
+  --vp-button-brand-text: #211d19;
+}
+
+.VPNavBarTitle .logo { border-radius: 8px; }
+.VPHomeHero .name { letter-spacing: -0.055em; }
+.VPHomeHero .text { max-width: 720px; letter-spacing: -0.04em; }
+.VPHomeHero .tagline { max-width: 650px; line-height: 1.55; }
+.VPButton { border-radius: 10px !important; }
+.VPFeature { border-radius: 16px !important; border-color: var(--vp-c-divider) !important; }
+.VPFeature .title { letter-spacing: -0.015em; }
+.vp-doc h1, .vp-doc h2, .vp-doc h3 { letter-spacing: -0.03em; }
+.vp-doc a { text-underline-offset: 3px; }
+.vp-doc div[class*='language-'] { border: 1px solid var(--vp-c-divider); border-radius: 12px; }
+
+.page-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: -4px 0 18px;
+}
+
+.page-actions button,
+.page-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 9px;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.page-actions button:hover,
+.page-actions a:hover {
+  border-color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1);
+}
+
+.product-proof {
+  margin: 18px auto 48px;
+  max-width: 1080px;
+  padding: 0 24px;
+}
+
+.product-proof img {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 18px;
+  box-shadow: 0 24px 70px rgba(52, 42, 32, 0.13);
+}
+
+.product-proof p {
+  margin: 12px 2px 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+}
+
+.truth-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 28px 0;
+}
+
+.truth-card {
+  padding: 18px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 14px;
+  background: var(--vp-c-bg-soft);
+}
+
+.truth-card strong { display: block; margin-bottom: 6px; }
+.truth-card span { color: var(--vp-c-text-2); font-size: 14px; line-height: 1.45; }
+
+@media (max-width: 700px) {
+  .truth-grid { grid-template-columns: 1fr; }
+  .product-proof { padding: 0 18px; }
+  .page-actions button, .page-actions a { min-height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+}

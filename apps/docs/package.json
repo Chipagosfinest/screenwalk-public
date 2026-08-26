@@ -1,0 +1,17 @@
+{
+  "name": "@screenwalk/docs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "artifacts": "node ../../scripts/build-docs-artifacts.mjs",
+    "build": "pnpm artifacts && vitepress build",
+    "dev": "pnpm artifacts && vitepress dev",
+    "preview": "vitepress preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "vitepress": "1.6.4",
+    "vue": "3.5.41"
+  }
+}

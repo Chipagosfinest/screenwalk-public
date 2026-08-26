@@ -1,0 +1,629 @@
+{
+  "schemaVersion": "screenbranch.graph.v0",
+  "project": {
+    "name": "screenwalk-html-fixture",
+    "root": "fixtures/html-app",
+    "framework": "web",
+    "generatedAt": "2026-08-26T03:14:09.251Z",
+    "service": {
+      "id": "app",
+      "name": "screenwalk-html-fixture",
+      "path": ".",
+      "kind": "web",
+      "framework": "html",
+      "deployProviders": [],
+      "integrations": [],
+      "featureFlags": [],
+      "environments": []
+    },
+    "topology": {
+      "schemaVersion": "screenwalk.topology.v0",
+      "repository": {
+        "name": "screenwalk-html-fixture",
+        "root": "fixtures/html-app",
+        "kind": "single-app"
+      },
+      "services": [
+        {
+          "id": "app",
+          "name": "screenwalk-html-fixture",
+          "path": ".",
+          "kind": "web",
+          "framework": "html",
+          "deployProviders": [],
+          "integrations": [],
+          "featureFlags": [],
+          "environments": []
+        }
+      ],
+      "generatedAt": "2026-08-26T03:13:56.003Z"
+    }
+  },
+  "nodes": [
+    {
+      "id": "screen:root",
+      "title": "Home",
+      "route": "/",
+      "sourceFile": "public/index.html",
+      "kind": "page",
+      "stateKey": "default",
+      "confidence": 1,
+      "persona": "default",
+      "identity": {
+        "familyId": "family:8cb0d66377eb",
+        "variantId": "variant:c143e16d9d8e",
+        "routeTemplate": "/",
+        "semanticUrlState": {
+          "query": {}
+        },
+        "presentation": {
+          "kind": "page",
+          "overlays": [],
+          "slots": []
+        },
+        "review": {
+          "status": "automatic",
+          "reasons": [],
+          "suggestions": []
+        }
+      },
+      "capture": {
+        "kind": "captured",
+        "quality": "ready",
+        "asset": "/captures/fixture/home-desktop-d442557b.png",
+        "url": "http://127.0.0.1:3111/",
+        "title": "Walkable — Home",
+        "observedAt": "2026-08-26T03:13:57.666Z",
+        "contentHash": "88e6c907",
+        "captureId": "capture:49cbef9b",
+        "context": {
+          "persona": "default",
+          "viewport": "desktop",
+          "browser": "chromium",
+          "locale": "en",
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "network": "online"
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        }
+      },
+      "captureVariants": {
+        "desktop": {
+          "kind": "captured",
+          "quality": "ready",
+          "asset": "/captures/fixture/home-desktop-d442557b.png",
+          "url": "http://127.0.0.1:3111/",
+          "title": "Walkable — Home",
+          "observedAt": "2026-08-26T03:13:57.666Z",
+          "contentHash": "88e6c907",
+          "captureId": "capture:49cbef9b",
+          "context": {
+            "persona": "default",
+            "viewport": "desktop",
+            "browser": "chromium",
+            "locale": "en",
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "network": "online"
+          },
+          "viewport": {
+            "width": 1280,
+            "height": 800
+          }
+        },
+        "mobile": {
+          "kind": "captured",
+          "quality": "ready",
+          "asset": "/captures/fixture/home-mobile-d442557b.png",
+          "url": "http://127.0.0.1:3111/",
+          "title": "Walkable — Home",
+          "observedAt": "2026-08-26T03:14:05.721Z",
+          "contentHash": "873c7d84",
+          "captureId": "capture:5c4c8023",
+          "context": {
+            "persona": "default",
+            "viewport": "mobile",
+            "browser": "chromium",
+            "locale": "en",
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "network": "online"
+          },
+          "viewport": {
+            "width": 390,
+            "height": 844
+          }
+        }
+      },
+      "diagnostics": [
+        {
+          "id": "diagnostic:bb6c8e61",
+          "kind": "console",
+          "severity": "error",
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "count": 1,
+          "observedAt": "2026-08-26T03:14:05.821Z",
+          "url": "http://127.0.0.1:3111/"
+        }
+      ],
+      "interactiveTargets": [
+        {
+          "id": "target:409490f4",
+          "role": "link",
+          "name": "See plans",
+          "href": "http://127.0.0.1:3111/plans.html",
+          "status": "observed"
+        },
+        {
+          "id": "target:c767ac11",
+          "role": "link",
+          "name": "How it works",
+          "href": "http://127.0.0.1:3111/about.html",
+          "status": "observed"
+        },
+        {
+          "id": "target:dd6819cf",
+          "role": "link",
+          "name": "Open mirrored route",
+          "href": "http://127.0.0.1:3111/mirror.html",
+          "status": "failed",
+          "reason": "Navigation was attempted but not accepted as a transition: the destination rendered the same title and body content as its source"
+        },
+        {
+          "id": "target:977329a7",
+          "role": "link",
+          "name": "Jump to details",
+          "href": "http://127.0.0.1:3111/#details",
+          "status": "local",
+          "reason": "Same-screen link or anchor; it is not a route transition."
+        },
+        {
+          "id": "target:45653856",
+          "role": "link",
+          "name": "External proof",
+          "href": "https://example.com/",
+          "status": "blocked",
+          "reason": "External navigation is never auto-clicked."
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "static",
+          "detail": "Static HTML entry point",
+          "sourceFile": "public/index.html",
+          "line": 1
+        },
+        {
+          "kind": "observed",
+          "detail": "Browser capture of http://127.0.0.1:3111/"
+        },
+        {
+          "kind": "observed",
+          "detail": "Browser capture of http://127.0.0.1:3111/"
+        }
+      ]
+    },
+    {
+      "id": "screen:runtime:3704e254",
+      "title": "Plans.html",
+      "route": "/plans.html",
+      "sourceFile": "(browser discovery)",
+      "kind": "page",
+      "stateKey": "default",
+      "confidence": 1,
+      "persona": "default",
+      "identity": {
+        "familyId": "family:3470938bebe8",
+        "variantId": "variant:24a3ce402414",
+        "routeTemplate": "/plans.html",
+        "semanticUrlState": {
+          "query": {}
+        },
+        "presentation": {
+          "kind": "page",
+          "overlays": [],
+          "slots": []
+        },
+        "review": {
+          "status": "automatic",
+          "reasons": [],
+          "suggestions": []
+        }
+      },
+      "capture": {
+        "kind": "captured",
+        "quality": "ready",
+        "asset": "/captures/fixture/plans-html-desktop-f0791373.png",
+        "url": "http://127.0.0.1:3111/plans.html",
+        "title": "Walkable — Plans",
+        "observedAt": "2026-08-26T03:14:00.991Z",
+        "contentHash": "dea81e51",
+        "captureId": "capture:6c26f15e",
+        "context": {
+          "persona": "default",
+          "viewport": "desktop",
+          "browser": "chromium",
+          "locale": "en",
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "network": "online"
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        }
+      },
+      "captureVariants": {
+        "desktop": {
+          "kind": "captured",
+          "quality": "ready",
+          "asset": "/captures/fixture/plans-html-desktop-f0791373.png",
+          "url": "http://127.0.0.1:3111/plans.html",
+          "title": "Walkable — Plans",
+          "observedAt": "2026-08-26T03:14:00.991Z",
+          "contentHash": "dea81e51",
+          "captureId": "capture:6c26f15e",
+          "context": {
+            "persona": "default",
+            "viewport": "desktop",
+            "browser": "chromium",
+            "locale": "en",
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "network": "online"
+          },
+          "viewport": {
+            "width": 1280,
+            "height": 800
+          }
+        },
+        "mobile": {
+          "kind": "captured",
+          "quality": "ready",
+          "asset": "/captures/fixture/plans-html-mobile-5fde3405.png",
+          "url": "http://127.0.0.1:3111/plans.html",
+          "title": "Walkable — Plans",
+          "observedAt": "2026-08-26T03:14:06.986Z",
+          "contentHash": "e1524649",
+          "captureId": "capture:cf0509a3",
+          "context": {
+            "persona": "default",
+            "viewport": "mobile",
+            "browser": "chromium",
+            "locale": "en",
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "network": "online"
+          },
+          "viewport": {
+            "width": 390,
+            "height": 844
+          }
+        }
+      },
+      "diagnostics": [],
+      "interactiveTargets": [
+        {
+          "id": "target:b1a4fdfe",
+          "role": "link",
+          "name": "Compare plans",
+          "href": "http://127.0.0.1:3111/compare.html",
+          "status": "unobserved",
+          "reason": "Visible safe link has not been observed completing a transition."
+        },
+        {
+          "id": "target:3d155864",
+          "role": "link",
+          "name": "Back home",
+          "href": "http://127.0.0.1:3111/",
+          "status": "unobserved",
+          "reason": "Visible safe link has not been observed completing a transition."
+        },
+        {
+          "id": "target:cd6b8043",
+          "role": "link",
+          "name": "Delete account",
+          "href": "http://127.0.0.1:3111/delete-account",
+          "status": "unsafe",
+          "reason": "Potentially destructive or consequential route is never auto-clicked."
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "observed",
+          "detail": "Same-origin link discovered in the rendered application"
+        },
+        {
+          "kind": "observed",
+          "detail": "Browser capture of http://127.0.0.1:3111/plans.html"
+        },
+        {
+          "kind": "observed",
+          "detail": "Browser capture of http://127.0.0.1:3111/plans.html"
+        }
+      ]
+    },
+    {
+      "id": "screen:runtime:db5b1640",
+      "title": "About.html",
+      "route": "/about.html",
+      "sourceFile": "(browser discovery)",
+      "kind": "page",
+      "stateKey": "default",
+      "confidence": 1,
+      "persona": "default",
+      "identity": {
+        "familyId": "family:d3b451347aee",
+        "variantId": "variant:5b0edc7ca427",
+        "routeTemplate": "/about.html",
+        "semanticUrlState": {
+          "query": {}
+        },
+        "presentation": {
+          "kind": "page",
+          "overlays": [],
+          "slots": []
+        },
+        "review": {
+          "status": "automatic",
+          "reasons": [],
+          "suggestions": []
+        }
+      },
+      "capture": {
+        "kind": "captured",
+        "quality": "ready",
+        "asset": "/captures/fixture/about-html-desktop-1f3576cf.png",
+        "url": "http://127.0.0.1:3111/about.html",
+        "title": "Walkable — About",
+        "observedAt": "2026-08-26T03:14:02.111Z",
+        "contentHash": "052dc2a7",
+        "captureId": "capture:8282ab37",
+        "context": {
+          "persona": "default",
+          "viewport": "desktop",
+          "browser": "chromium",
+          "locale": "en",
+          "colorScheme": "light",
+          "reducedMotion": "no-preference",
+          "network": "online"
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        }
+      },
+      "captureVariants": {
+        "desktop": {
+          "kind": "captured",
+          "quality": "ready",
+          "asset": "/captures/fixture/about-html-desktop-1f3576cf.png",
+          "url": "http://127.0.0.1:3111/about.html",
+          "title": "Walkable — About",
+          "observedAt": "2026-08-26T03:14:02.111Z",
+          "contentHash": "052dc2a7",
+          "captureId": "capture:8282ab37",
+          "context": {
+            "persona": "default",
+            "viewport": "desktop",
+            "browser": "chromium",
+            "locale": "en",
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "network": "online"
+          },
+          "viewport": {
+            "width": 1280,
+            "height": 800
+          }
+        },
+        "mobile": {
+          "kind": "captured",
+          "quality": "ready",
+          "asset": "/captures/fixture/about-html-mobile-ffdca22e.png",
+          "url": "http://127.0.0.1:3111/about.html",
+          "title": "Walkable — About",
+          "observedAt": "2026-08-26T03:14:08.263Z",
+          "contentHash": "1ba46c52",
+          "captureId": "capture:b0de34ce",
+          "context": {
+            "persona": "default",
+            "viewport": "mobile",
+            "browser": "chromium",
+            "locale": "en",
+            "colorScheme": "light",
+            "reducedMotion": "no-preference",
+            "network": "online"
+          },
+          "viewport": {
+            "width": 390,
+            "height": 844
+          }
+        }
+      },
+      "diagnostics": [],
+      "interactiveTargets": [
+        {
+          "id": "target:0bc5eb51",
+          "role": "link",
+          "name": "Return home",
+          "href": "http://127.0.0.1:3111/",
+          "status": "unobserved",
+          "reason": "Visible safe link has not been observed completing a transition."
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "observed",
+          "detail": "Same-origin link discovered in the rendered application"
+        },
+        {
+          "kind": "observed",
+          "detail": "Browser capture of http://127.0.0.1:3111/about.html"
+        },
+        {
+          "kind": "observed",
+          "detail": "Browser capture of http://127.0.0.1:3111/about.html"
+        }
+      ]
+    },
+    {
+      "id": "screen:runtime:dbcf6e57",
+      "title": "Mirror.html",
+      "route": "/mirror.html",
+      "sourceFile": "(browser discovery)",
+      "kind": "page",
+      "stateKey": "default",
+      "confidence": 1,
+      "persona": "default",
+      "identity": {
+        "familyId": "family:529ed557a086",
+        "variantId": "variant:2b834808e1ab",
+        "routeTemplate": "/mirror.html",
+        "semanticUrlState": {
+          "query": {}
+        },
+        "presentation": {
+          "kind": "page",
+          "overlays": [],
+          "slots": []
+        },
+        "review": {
+          "status": "automatic",
+          "reasons": [],
+          "suggestions": []
+        }
+      },
+      "diagnostics": [],
+      "interactiveTargets": [],
+      "evidence": [
+        {
+          "kind": "observed",
+          "detail": "Same-origin link discovered in the rendered application"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge:observed:screen:root:screen:runtime:3704e254:d9898933",
+      "source": "screen:root",
+      "target": "screen:runtime:3704e254",
+      "action": "Click See plans",
+      "conditionLogic": "all",
+      "confidence": 1,
+      "observations": [
+        {
+          "id": "observation:cc0a1b37",
+          "observedAt": "2026-08-26T03:14:01.056Z",
+          "fromUrl": "http://127.0.0.1:3111/",
+          "toUrl": "http://127.0.0.1:3111/plans.html",
+          "durationMs": 1052,
+          "trigger": {
+            "kind": "click",
+            "role": "link",
+            "name": "See plans"
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "observed",
+          "detail": "Clicked link \"See plans\" from http://127.0.0.1:3111/ to http://127.0.0.1:3111/plans.html"
+        }
+      ]
+    },
+    {
+      "id": "edge:observed:screen:root:screen:runtime:db5b1640:9c870aa6",
+      "source": "screen:root",
+      "target": "screen:runtime:db5b1640",
+      "action": "Click How it works",
+      "conditionLogic": "all",
+      "confidence": 1,
+      "observations": [
+        {
+          "id": "observation:1f0d36f3",
+          "observedAt": "2026-08-26T03:14:02.166Z",
+          "fromUrl": "http://127.0.0.1:3111/",
+          "toUrl": "http://127.0.0.1:3111/about.html",
+          "durationMs": 1012,
+          "trigger": {
+            "kind": "click",
+            "role": "link",
+            "name": "How it works"
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "kind": "observed",
+          "detail": "Clicked link \"How it works\" from http://127.0.0.1:3111/ to http://127.0.0.1:3111/about.html"
+        }
+      ]
+    }
+  ],
+  "journeys": [
+    {
+      "id": "journey:auto:14d345bd",
+      "title": "Home → Plans.html",
+      "nodeIds": [
+        "screen:root",
+        "screen:runtime:3704e254"
+      ],
+      "edgeIds": [
+        "edge:observed:screen:root:screen:runtime:3704e254:d9898933"
+      ],
+      "kind": "observed",
+      "provenance": "composed-from-observed"
+    },
+    {
+      "id": "journey:auto:d051dcfd",
+      "title": "Home → About.html",
+      "nodeIds": [
+        "screen:root",
+        "screen:runtime:db5b1640"
+      ],
+      "edgeIds": [
+        "edge:observed:screen:root:screen:runtime:db5b1640:9c870aa6"
+      ],
+      "kind": "observed",
+      "provenance": "composed-from-observed"
+    }
+  ],
+  "gaps": [],
+  "run": {
+    "id": "2026-08-26T03-13-55-484Z-cbc78d77",
+    "startedAt": "2026-08-26T03:13:55.485Z",
+    "completedAt": "2026-08-26T03:14:09.440Z",
+    "baseUrl": "http://127.0.0.1:3111",
+    "environment": "local",
+    "environmentEvidence": "inferred",
+    "deployment": {
+      "url": "http://127.0.0.1:3111"
+    },
+    "serviceId": "app",
+    "status": "complete"
+  },
+  "diff": {
+    "addedNodeIds": [
+      "screen:runtime:3704e254",
+      "screen:runtime:db5b1640",
+      "screen:runtime:dbcf6e57"
+    ],
+    "removedNodeIds": [
+      "screen:dashboard",
+      "screen:onboarding",
+      "screen:onboarding:profile",
+      "screen:settings",
+      "screen:root:state:error",
+      "screen:root:state:loading",
+      "screen:root:state:not-found"
+    ],
+    "changedNodeIds": [
+      "screen:root"
+    ]
+  }
+}

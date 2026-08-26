@@ -1,0 +1,58 @@
+name: Public beta feedback
+description: Report a first-run failure, misleading map, or designer-to-agent workflow gap
+title: "[beta] "
+labels: ["beta-feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for testing Screenwalk. Do not attach secrets, private customer data, or unredacted sensitive screenshots.
+  - type: input
+    id: framework
+    attributes:
+      label: App and framework
+      placeholder: Next.js App Router, Vite React, static site...
+    validations:
+      required: true
+  - type: input
+    id: time-to-review
+    attributes:
+      label: Minutes to the first useful review
+      placeholder: 4 minutes
+    validations:
+      required: true
+  - type: dropdown
+    id: setup
+    attributes:
+      label: Did setup and first capture work without debugging?
+      options: ["Yes", "No", "A builder prepared it for me"]
+    validations:
+      required: true
+  - type: textarea
+    id: misleading
+    attributes:
+      label: What was wrong, misleading, or confusing?
+      description: Include a sanitized route and exact error when possible.
+    validations:
+      required: true
+  - type: textarea
+    id: missing-context
+    attributes:
+      label: What context was missing?
+      description: For example environment, viewport, access state, feature flag, A/B variant, data state, or path intent.
+  - type: textarea
+    id: handoff
+    attributes:
+      label: Did the copied change brief help a real implementation round?
+      description: What did it preserve or miss compared with a screenshot, Loom, Figma comment, or prose prompt?
+    validations:
+      required: true
+  - type: textarea
+    id: rerun
+    attributes:
+      label: What proof would make you rerun Screenwalk after the change?
+    validations:
+      required: true
+  - type: textarea
+    id: jank
+    attributes:
+      label: The one thing that made it feel janky

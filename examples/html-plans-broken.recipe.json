@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "screenbranch.recipe.v0",
+  "journeys": [
+    {
+      "id": "journey:html-plans-broken",
+      "title": "Open plans with a broken expectation",
+      "startRoute": "/",
+      "steps": [
+        {
+          "targetRoute": "/plans.html",
+          "trigger": { "role": "link", "name": "See plans" }
+        }
+      ],
+      "terminalAssertion": {
+        "type": "visible-text",
+        "text": "This text should not exist"
+      }
+    }
+  ]
+}

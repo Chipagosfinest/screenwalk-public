@@ -1,0 +1,19 @@
+{
+  "name": "@screenbranch/capture",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "capture": "tsx src/cli.ts capture",
+    "record": "tsx src/cli.ts record",
+    "test": "tsx --test src/*.test.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@screenbranch/schema": "workspace:*",
+    "playwright": "1.55.1"
+  },
+  "devDependencies": {
+    "tsx": "4.23.12"
+  }
+}

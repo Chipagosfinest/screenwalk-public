@@ -1,0 +1,7 @@
+{
+  "name": "screenwalk-html-fixture",
+  "private": true,
+  "scripts": {
+    "dev": "node server.mjs"
+  }
+}
