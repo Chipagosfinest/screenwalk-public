@@ -36,7 +36,6 @@
     "screenwalk": "node scripts/screenbranch.mjs",
     "screenbranch": "node scripts/screenbranch.mjs",
     "build": "pnpm --filter @screenbranch/studio build && pnpm --filter @screenwalk/docs build",
-    "build:web": "pnpm --filter @screenbranch/studio build && SCREENWALK_DOCS_ORIGIN=https://screenwalk.dev pnpm --filter @screenwalk/docs build && node scripts/build-web.mjs",
     "build:package": "pnpm --filter @screenbranch/studio build && node scripts/build-package.mjs",
     "dev": "pnpm --filter @screenbranch/studio dev",
     "docs:dev": "pnpm --filter @screenwalk/docs dev",
