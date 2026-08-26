@@ -22,7 +22,6 @@ apps/docs/public/llms-full.txt
 apps/docs/public/markdown/
 apps/docs/public/robots.txt
 apps/docs/.vitepress/cache/
-apps/web-dist/
 fixtures/next-app/AGENTS.md
 fixtures/next-app/CLAUDE.md
 .env*

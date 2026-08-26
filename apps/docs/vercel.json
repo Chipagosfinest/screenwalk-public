@@ -1,8 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "SCREENWALK_DOCS_ORIGIN=https://screenwalk.dev pnpm build",
   "cleanUrls": true,
-  "buildCommand": "pnpm --filter @screenbranch/studio build",
-  "outputDirectory": "apps/studio/dist",
+  "outputDirectory": ".vitepress/dist",
   "headers": [
     {
       "source": "/(.*)",
